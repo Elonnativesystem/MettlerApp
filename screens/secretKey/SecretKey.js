@@ -49,6 +49,7 @@ const SecretKey = ({navigation}) => {
           resizeMode="contain"
         />
         <Text style={styles.subText}>Enter Your Passcode</Text>
+        
         <OtpBox length={6} onOtpChange={handleOtpChange} />
         <TouchableOpacity
           style={styles.btnView}

@@ -39,6 +39,14 @@ export const styles = StyleSheet.create({
   },
   q15Btn: {
     alignItems: 'center',
-    marginBottom: '10%',
+    marginVertical: '10%',
+    width: '90%',
+    backgroundColor: '#0f3995',
+    padding: 10,
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    borderRadius: 5,
+    height: 50,
+    marginHorizontal: '5%',
   },
 });

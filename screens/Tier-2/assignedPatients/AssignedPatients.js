@@ -12,7 +12,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import Toast from 'react-native-simple-toast';
 import {Loader} from '../../../components';
 import {getAllPatients} from '../../../redux/apiCalls';
-
+import MIcon from 'react-native-vector-icons/MaterialIcons';
 const AssignedPatients = ({navigation}) => {
   const dispatch = useDispatch();
   const {pending} = useSelector(state => state.user);
@@ -38,7 +38,8 @@ const AssignedPatients = ({navigation}) => {
       />
       <View style={styles.header}>
         <Text style={styles.headerText}>Assigned by me</Text>
-        <Text style={{fontSize: 30}}> 🔎</Text>
+        {/* <Text style={{fontSize: 30}}> 🔎</Text> */}
+        <MIcon name="search" size={30} />
       </View>
       <View style={styles.flatList}>
         <FlatList
@@ -51,11 +52,12 @@ const AssignedPatients = ({navigation}) => {
                 navigation.navigate('PatientDetails', {patient: data[index]})
               }>
               <View style={styles.patientView}>
-                <Image
+                {/* <Image
                   source={require('../../../assets/images/avatar2.png')}
                   resizeMode="contain"
                   style={{width: '10%', height: '100%'}}
-                />
+                /> */}
+                <MIcon name="no-accounts" size={60} />
                 <View style={styles.nameView}>
                   <Text style={styles.patientUname}>{item.username}</Text>
                   <Text style={styles.patientName}>
@@ -68,7 +70,8 @@ const AssignedPatients = ({navigation}) => {
                   <Text style={styles.orgName}>{item.organization}</Text>
                 </View>
                 <View style={styles.arrowView}>
-                  <Text style={styles.arrow}>＞</Text>
+                  {/* <Text style={styles.arrow}>＞</Text> */}
+                  <MIcon name="arrow-forward-ios" size={25} color="#8d8d8d" />
                 </View>
               </View>
             </TouchableOpacity>

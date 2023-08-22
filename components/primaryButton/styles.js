@@ -2,8 +2,8 @@ import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
   btnView: {
-    
-    padding: '4%',
+    maxHeight: 70,
+    padding: '5%',
     alignItems: 'center',
     justifyContent: 'center',
     width: '80%',

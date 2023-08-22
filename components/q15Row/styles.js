@@ -18,9 +18,11 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
+    marginTop: 10,
   },
   boxWithData: {
-    backgroundColor: '#B1CDF8',
+    backgroundColor: '#BCD3F5',
+    borderWidth:0
   },
   hourColumn: {
     width: 40,
@@ -34,14 +36,15 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   box: {
-    width: 65,
-    height: 65,
+    width: 79,
+    height: 58,
     backgroundColor: '#F8FAFB',
-    borderColor: '#808080',
-    borderWidth: 0.3,
+    borderColor: '#6581BC',
+    borderWidth: 2,
+    borderRadius: 7,
     justifyContent: 'center',
     alignItems: 'center',
-    // marginLeft:10
+    margin: 3,
   },
   boxText: {
     color: '#000',

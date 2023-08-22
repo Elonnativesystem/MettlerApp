@@ -42,20 +42,22 @@ export const styles = StyleSheet.create({
   },
   inputView: {
     borderWidth: 0.6,
-    padding: 10,
+    padding: 2,
+    // height: '15%',
+    maxHeight: 80,
     marginTop: 15,
     borderRadius: 6,
     flexDirection: 'row',
     justifyContent: 'flex-start',
+    alignItems: 'center',
   },
   inputIcon: {
-    width: '10%',
-    height: '90%',
+    marginHorizontal: 5,
   },
   eyeIcon: {
     position: 'absolute',
     right: '4%',
-    top: '40%',
+    top: '20%',
   },
 
   input: {
@@ -69,7 +71,8 @@ export const styles = StyleSheet.create({
   },
   btnView: {
     backgroundColor: '#0f3995',
-    padding: '6%',
+    padding: '5%',
+    maxHeight: 70,
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',

@@ -38,9 +38,9 @@ const Q15Row = ({onPressBox, hour, date}) => {
   ];
   return (
     <View style={styles.boxView}>
-      <View style={styles.hourColumn}>
+      {/* <View style={styles.hourColumn}>
         <Text style={styles.hourText}>{hour}:00</Text>
-      </View>
+      </View> */}
       <FlatList
         data={data}
         horizontal
@@ -65,6 +65,13 @@ const Q15Row = ({onPressBox, hour, date}) => {
                   : null,
               ]}
               activeOpacity={0.8}
+              disabled={memoizedQ15Config.some(
+                configItem =>
+                  configItem.q15Slot === item.code + hour &&
+                  configItem.q15Date === formattedDate &&
+                  configItem.location &&
+                  configItem.activity,
+              )}
               onPress={
                 memoizedQ15Config.some(
                   configItem =>
@@ -93,6 +100,11 @@ const Q15Row = ({onPressBox, hour, date}) => {
                 ))
                 // )
               }
+              <View>
+                <Text style={{color: '#415F9E'}}>
+                  {hour}:{item.mins}
+                </Text>
+              </View>
             </TouchableOpacity>
           </View>
         )}

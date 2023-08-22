@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Logout} from '../../redux/apiCalls';
 import {styles} from './styles';
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const CustomDrawer = props => {
   const username = useSelector(state => state.user.userInfo.username);
@@ -29,7 +30,8 @@ const CustomDrawer = props => {
             onPress={() => props.navigation.closeDrawer()}
             style={styles.closeBtn}
             activeOpacity={0.7}>
-            <Text style={styles.closeBtnText}>&lt;☰</Text>
+            {/* <Text style={styles.closeBtnText}>&lt;☰</Text> */}
+            <MCIcon name="menu-open" size={28} />
           </TouchableOpacity>
         </View>
         <View style={styles.drawerItemList}>

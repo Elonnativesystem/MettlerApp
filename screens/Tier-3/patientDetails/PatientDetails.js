@@ -7,6 +7,8 @@ import {
   VitalBtnVertical,
 } from '../../../components';
 import PatientDetails2 from './PatientDetails2';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const PatientDetails = ({navigation, route}) => {
   const {patient} = route.params;
@@ -32,46 +34,84 @@ const PatientDetails = ({navigation, route}) => {
         />
 
         <View style={styles.pVitals}>
-          <VitalBtnHorizontal icon="#" title="Height" value="171.5(cm)" />
-          <VitalBtnHorizontal icon="#" title="Blood" value="B +ive" />
-          <VitalBtnHorizontal icon="#" title="Weight" value="58(kg)" />
-          <VitalBtnHorizontal icon="#" title="DOB" value="31/02/1996" />
-          <VitalBtnHorizontal icon="#" title="Gulucose" value="50 mg/dl" />
+          <VitalBtnHorizontal
+            icon="human-male-height"
+            size={30}
+            title="Height"
+            value="171.5(cm)"
+          />
+          <VitalBtnHorizontal
+            icon="blood-bag"
+            size={30}
+            title="Blood"
+            value="B +ive"
+          />
+          <VitalBtnHorizontal
+            icon="weight-kilogram"
+            size={30}
+            title="Weight"
+            value="58(kg)"
+          />
+          <VitalBtnHorizontal
+            icon="calendar-multiselect"
+            title="DOB"
+            value="31/02/1996"
+            size={30}
+          />
+          <VitalBtnHorizontal
+            icon="note-edit-outline"
+            title="Gulucose"
+            size={30}
+            value="50 mg/dl"
+          />
         </View>
       </View>
       <View style={styles.vitalBtn2View}>
         <VitalBtnVertical
-          icon="&gt;"
+          icon="temperature-celsius"
+          size={30}
           header="Temp"
           data="97.7°C"
           bg1="#E1E3FF"
           bg2="#B3B6E0"
         />
         <VitalBtnVertical
-          icon="&gt;"
+          icon="blood-bag"
+          size={30}
           header="BP"
           data="120/190"
           bg1="#D8F1D8"
           bg2="#A7DBA7"
         />
         <VitalBtnVertical
-          icon="&gt;"
+          icon="battery-heart-outline"
+          size={30}
           header="Heart Rate"
           data="110 bpm"
           bg1="#FAE8DF"
           bg2="#F1C0A7"
         />
       </View>
-
       <View style={styles.q15Btn}>
-        <Button
-          label="📆 Q-15 Form"
+        <TouchableOpacity
+          // style={styles.q15Btn}
           onPress={() => {
             navigation.navigate('Q15', {patient});
-          }}
-          active
-        />
+          }}>
+          <Text
+            style={{
+              color: '#fff',
+              fontSize: 20,
+              textAlign: 'center',
+              textAlignVertical: 'top',
+              marginHorizontal: 5,
+            }}>
+            <MCIcon name="clock-edit-outline" size={30} />
+            Q15
+          </Text>
+        </TouchableOpacity>
       </View>
+
       <PatientDetails2 />
     </ScrollView>
   );

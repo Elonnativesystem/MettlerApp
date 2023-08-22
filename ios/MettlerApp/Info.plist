@@ -2,48 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIAppFonts</key>
-	<array>
-		<string></string>
-	</array>
-	<key>item 18</key>
-	<string>AntDesign.ttf</string>
-	<key>item 17</key>
-	<string>Entypo.ttf</string>
-	<key>item 16</key>
-	<string>EvilIcons.ttf</string>
-	<key>item 15</key>
-	<string>Feather.ttf</string>
-	<key>item 14</key>
-	<string>FontAwesome.ttf</string>
-	<key>item 13</key>
-	<string>FontAwesome5_Brands.ttf</string>
-	<key>item 12</key>
-	<string>FontAwesome5_Regular.ttf</string>
-	<key>item 11</key>
-	<string>FontAwesome5_Solid.ttf</string>
-	<key>item 10</key>
-	<string>FontAwesome6_Brands.ttf</string>
-	<key>item 9</key>
-	<string>FontAwesome6_Regular.ttf</string>
-	<key>item 8</key>
-	<string>FontAwesome6_Solid.ttf</string>
-	<key>item 7</key>
-	<string>Fontisto.ttf</string>
-	<key>item 6</key>
-	<string>Foundation.ttf</string>
-	<key>item 5</key>
-	<string>Ionicons.ttf</string>
-	<key>item 4</key>
-	<string>MaterialCommunityIcons.ttf</string>
-	<key>item 3</key>
-	<string>MaterialIcons.ttf</string>
-	<key>item 2</key>
-	<string>Octicons.ttf</string>
-	<key>item 1</key>
-	<string>SimpleLineIcons.ttf</string>
-	<key>item 0</key>
-	<string>Zocial.ttf</string>
+	
+	
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -93,5 +53,27 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UIAppFonts</key>
+	<array>
+	<string>AntDesign.ttf</string>
+	<string>Entypo.ttf</string>
+	<string>EvilIcons.ttf</string>
+	<string>Feather.ttf</string>
+	<string>FontAwesome.ttf</string>
+	<string>FontAwesome5_Brands.ttf</string>
+	<string>FontAwesome5_Regular.ttf</string>
+	<string>FontAwesome5_Solid.ttf</string>
+	<string>FontAwesome6_Brands.ttf</string>
+	<string>FontAwesome6_Regular.ttf</string>
+	<string>FontAwesome6_Solid.ttf</string>
+	<string>Fontisto.ttf</string>
+	<string>Foundation.ttf</string>
+	<string>Ionicons.ttf</string>
+	<string>MaterialCommunityIcons.ttf</string>
+	<string>MaterialIcons.ttf</string>
+	<string>Octicons.ttf</string>
+	<string>SimpleLineIcons.ttf</string>
+	<string>Zocial.ttf</string>
+	</array>
 </dict>
 </plist>

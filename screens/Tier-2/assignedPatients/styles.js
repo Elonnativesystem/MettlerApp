@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: 0.7,
-    padding: 5,
+    padding: 10,
     borderBottomColor: '#808080',
     justifyContent: 'space-between',
   },
@@ -19,6 +19,8 @@ export const styles = StyleSheet.create({
     alignItems: 'center', // Added alignItems to center content vertically
     marginVertical: 10, // Adjust margin as needed
     paddingVertical: 5, // Added padding to create space between items
+    borderBottomWidth: 0.8,
+    borderBottomColor: '#ccc',
   },
 
   nameView: {
@@ -37,7 +39,7 @@ export const styles = StyleSheet.create({
   },
   orgView: {
     backgroundColor: '#DEF9EE',
-    height: '80%',
+    height: '60%',
     justifyContent: 'center',
     padding: 3,
     marginTop: 10,

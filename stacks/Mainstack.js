@@ -15,6 +15,9 @@ import {Alert, SafeAreaView, Text} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Logout} from '../redux/apiCalls';
 import {Button, Header, CustomDrawer} from '../components';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import FA5Icon from 'react-native-vector-icons/FontAwesome5';
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Drawer = createDrawerNavigator();
 const Mainstack = ({navigation}) => {
@@ -93,9 +96,11 @@ const Mainstack = ({navigation}) => {
             component={PatientsStacks}
             options={{
               drawerIcon: ({focused, size, color}) => (
-                <Text style={{color: focused ? '#fff' : '#000', fontSize: 20}}>
-                  ⌘
-                </Text>
+                <MCIcon
+                  name="view-dashboard-outline"
+                  size={size}
+                  color={focused ? '#fff' : '#000'}
+                />
               ),
             }}
           />
@@ -104,9 +109,11 @@ const Mainstack = ({navigation}) => {
             component={PatientsStacks}
             options={{
               drawerIcon: ({focused, size, color}) => (
-                <Text style={{color: focused ? '#fff' : '#000', fontSize: 20}}>
-                  💉
-                </Text>
+                <Icon
+                  name="people-outline"
+                  size={size}
+                  color={focused ? '#fff' : '#000'}
+                />
               ),
             }}
           />
@@ -115,9 +122,11 @@ const Mainstack = ({navigation}) => {
             component={StaffDetails}
             options={{
               drawerIcon: ({focused, size, color}) => (
-                <Text style={{color: focused ? '#fff' : '#000', fontSize: 20}}>
-                  ＃
-                </Text>
+                <MCIcon
+                  name="account-cog-outline"
+                  size={size}
+                  color={focused ? '#fff' : '#000'}
+                />
               ),
             }}
           />
@@ -126,9 +135,11 @@ const Mainstack = ({navigation}) => {
             component={OrganizationDetails}
             options={{
               drawerIcon: ({focused, size, color}) => (
-                <Text style={{color: focused ? '#fff' : '#000', fontSize: 20}}>
-                  ☖
-                </Text>
+                <FA5Icon
+                  name="building"
+                  size={size}
+                  color={focused ? '#fff' : '#000'}
+                />
               ),
             }}
           />
@@ -137,9 +148,11 @@ const Mainstack = ({navigation}) => {
             component={PatientManagement}
             options={{
               drawerIcon: ({focused, size, color}) => (
-                <Text style={{color: focused ? '#fff' : '#000', fontSize: 20}}>
-                  ✓
-                </Text>
+                <MCIcon
+                  name="file-document-outline"
+                  size={size}
+                  color={focused ? '#fff' : '#000'}
+                />
               ),
             }}
           />
@@ -148,9 +161,11 @@ const Mainstack = ({navigation}) => {
             component={PatientStaffAssign}
             options={{
               drawerIcon: ({focused, size, color}) => (
-                <Text style={{color: focused ? '#fff' : '#000', fontSize: 20}}>
-                  ➼
-                </Text>
+                <FA5Icon
+                  name="chalkboard-teacher"
+                  size={size}
+                  color={focused ? '#fff' : '#000'}
+                />
               ),
             }}
           />
@@ -159,9 +174,11 @@ const Mainstack = ({navigation}) => {
             component={AdminConfiguration}
             options={{
               drawerIcon: ({focused, size, color}) => (
-                <Text style={{color: focused ? '#fff' : '#000', fontSize: 20}}>
-                  ⧆
-                </Text>
+                <Icon
+                  name="admin-panel-settings"
+                  size={27}
+                  color={focused ? '#fff' : '#000'}
+                />
               ),
             }}
           />

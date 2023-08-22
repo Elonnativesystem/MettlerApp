@@ -8,8 +8,9 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: 0.7,
-    padding: 5,
+    padding: 10,
     borderBottomColor: '#808080',
+    marginLeft: '3%',
   },
   headerText: {
     fontSize: 25,

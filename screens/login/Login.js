@@ -7,14 +7,17 @@ import {
   Image,
   ImageBackground,
   useColorScheme,
+  KeyboardAvoidingView,
+  ScrollView,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import Toast from 'react-native-simple-toast';
 import {GetOrganization, Login2} from '../../redux/apiCalls';
 import {styles} from './styles';
-import {Loader} from '../../components';
+import {Button, Loader} from '../../components';
 import {Dropdown} from 'react-native-element-dropdown';
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 const Login = ({navigation}) => {
   const {pending} = useSelector(state => state.user);
   const errorMsg = useSelector(state => state.user.error);
@@ -45,7 +48,12 @@ const Login = ({navigation}) => {
   }, [errorMsg]);
   const darkMode = useColorScheme() === 'dark';
   return (
-    <View style={[styles.mainContainer, darkMode && {backgroundColor: '#000'}]}>
+    <ScrollView
+      contentContainerStyle={[
+        styles.mainContainer,
+        darkMode && {backgroundColor: '#000'},
+      ]}
+      >
       <Loader
         visible={pending}
         textContent="Loading"
@@ -56,13 +64,13 @@ const Login = ({navigation}) => {
       <ImageBackground
         source={require('../../assets/images/background.png')}
         style={styles.topContainer}>
-        <View style={styles.header}>
+        <KeyboardAvoidingView style={styles.header}>
           <Image
             source={require('../../assets/images/logoHeader.png')}
             resizeMode="contain"
             style={styles.headerImage}
           />
-        </View>
+        </KeyboardAvoidingView>
       </ImageBackground>
 
       <View
@@ -74,10 +82,16 @@ const Login = ({navigation}) => {
           Login to your account
         </Text>
         <View style={[styles.inputView, darkMode && {borderColor: '#fff'}]}>
-          <Image
+          {/* <Image
             source={require('../../assets/images/profile.png')}
             resizeMode="contain"
             style={[styles.inputIcon, darkMode && {tintColor: '#fff'}]}
+          /> */}
+
+          <MCIcon
+            name="account-circle-outline"
+            size={30}
+            style={styles.inputIcon}
           />
           <TextInput
             placeholder="Username"
@@ -87,11 +101,12 @@ const Login = ({navigation}) => {
           />
         </View>
         <View style={[styles.inputView, darkMode && {borderColor: '#fff'}]}>
-          <Image
+          {/* <Image
             source={require('../../assets/images/key.png')}
             resizeMode="contain"
             style={[styles.inputIcon, darkMode && {tintColor: '#fff'}]}
-          />
+          /> */}
+          <MCIcon name="lock-outline" size={30} style={styles.inputIcon} />
           <TextInput
             placeholder="Password"
             secureTextEntry={show}
@@ -103,15 +118,21 @@ const Login = ({navigation}) => {
             style={styles.eyeIcon}
             onPress={() => setShow(!show)}
             activeOpacity={0.8}>
-            <Image
+            {/* <Image
               source={require('../../assets/images/eye.png')}
               resizeMode="contain"
               style={[darkMode && {tintColor: '#fff'}]}
-            />
+            /> */}
+            <MCIcon name={show ? 'eye-outline' : 'eye-off-outline'} size={30} />
           </TouchableOpacity>
         </View>
 
-        <View style={[styles.inputView, darkMode && {borderColor: '#fff'}]}>
+        <View
+          style={[
+            styles.inputView,
+            darkMode && {borderColor: '#fff'},
+            {padding: 7},
+          ]}>
           <Dropdown
             style={[styles.input, isFocus && {borderColor: 'blue'}]}
             placeholderStyle={{marginLeft: '3%'}}
@@ -136,10 +157,10 @@ const Login = ({navigation}) => {
               console.log(item.value);
             }}
             renderLeftIcon={() => (
-              <Image
-                source={require('../../assets/images/organization.png')}
-                resizeMode="contain"
-                style={[styles.inputIcon, darkMode && {tintColor: '#fff'}]}
+              <MCIcon
+                name="office-building-outline"
+                size={30}
+                style={styles.inputIcon}
               />
             )}
           />
@@ -158,7 +179,7 @@ const Login = ({navigation}) => {
           <Text style={styles.btnText}>Login</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

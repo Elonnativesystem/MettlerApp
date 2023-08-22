@@ -14,6 +14,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
   menuBtn: {
     justifyContent: 'center',
@@ -24,12 +25,12 @@ export const styles = StyleSheet.create({
     color: '#fff',
   },
   logoImage: {
-    width: '40%',
-    marginHorizontal: 40,
+    width: '50%',
+    marginHorizontal: 27,
   },
   profileBtn: {
     width: '100%',
-    marginLeft: 20,
+    marginLeft: 30,
   },
   profileImage: {
     width: '10%',

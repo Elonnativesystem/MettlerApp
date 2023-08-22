@@ -7,6 +7,7 @@ import OtpBox from './otpBox/OtpBox';
 import Button from './primaryButton/Button';
 import Q15Row from './q15Row/Q15Row';
 import ScheduleBtn from './scheduleBtn/ScheduleBtn';
+import Tabs from './tabs/Tabs';
 import VitalBtnHorizontal from './vitalBtnHorizontal/VitalBtnHorizontal';
 import VitalBtnVertical from './vitalBtnVertical/VitalBtnVertical';
 
@@ -20,6 +21,7 @@ export {
   OtpBox,
   Q15Row,
   ScheduleBtn,
+  Tabs,
   VitalBtnHorizontal,
   VitalBtnVertical,
 };

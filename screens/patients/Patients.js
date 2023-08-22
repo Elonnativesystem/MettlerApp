@@ -1,6 +1,7 @@
 import {View, Text, ScrollView, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
+import MIcon from 'react-native-vector-icons/MaterialIcons';
 
 const Patients = ({navigation}) => {
   const handleAssignedPatients = async () => {
@@ -18,7 +19,8 @@ const Patients = ({navigation}) => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <Text style={{fontSize: 30}}>👥</Text>
+        {/* <Text style={{fontSize: 30}}>👥</Text> */}
+        <MIcon name="people-outline" size={30} />
         <Text style={styles.headerText}> Patients</Text>
       </View>
       <View style={styles.row}>

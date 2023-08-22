@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import {styles} from './styles';
-
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 const Header = ({navigation}) => {
   return (
     <>
@@ -20,7 +20,8 @@ const Header = ({navigation}) => {
           style={styles.menuBtn}
           activeOpacity={0.7}
           onPress={() => navigation.openDrawer()}>
-          <Text style={styles.menuBtnText}>☰</Text>
+          {/* <Text style={styles.menuBtnText}>☰</Text> */}
+          <MCIcon name="menu" size={27} color="#fff" />
         </TouchableOpacity>
 
         <Image

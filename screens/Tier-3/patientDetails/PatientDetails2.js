@@ -2,14 +2,15 @@ import {View, Text} from 'react-native';
 import React from 'react';
 import {styles2} from './styles2';
 import {CalendarDate, HeartECG, ScheduleBtn} from '../../../components';
-
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 const PatientDetails2 = () => {
   return (
     <View style={styles2.container}>
       <View style={styles2.header}>
         <Text style={styles2.headerText}>Upcoming Schedule</Text>
         <View style={styles2.addIcon}>
-          <Text style={styles2.addIconText}>+</Text>
+          {/* <Text style={styles2.addIconText}>+</Text> */}
+          <MCIcon name="plus" size={30} color="#fff" />
         </View>
       </View>
       <View style={styles2.calenderView}>

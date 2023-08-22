@@ -4,7 +4,7 @@ import {styles} from './styles';
 import {useDispatch} from 'react-redux';
 import {Logout} from '../../redux/apiCalls';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import Icon from 'react-native-vector-icons/MaterialIcons';
 const Profile = ({navigation}) => {
   const dispatch = useDispatch();
   const handleSignout = async () => {
@@ -31,7 +31,7 @@ const Profile = ({navigation}) => {
         activeOpacity={0.9}
         onPress={() => alert('Stay Tuned')}>
         <View style={styles.start}>
-          <Text style={styles.startIcon}>#</Text>
+          <Icon name="account-circle" size={30} />
           <Text style={styles.startText}>My Profile</Text>
         </View>
         <View>
@@ -43,7 +43,7 @@ const Profile = ({navigation}) => {
         activeOpacity={0.9}
         onPress={() => alert('Stay Tuned')}>
         <View style={styles.start}>
-          <Text style={styles.startIcon}>#</Text>
+          <Icon name="edit" size={30} />
           <Text style={styles.startText}>Edit Profile</Text>
         </View>
         <View>
@@ -55,7 +55,7 @@ const Profile = ({navigation}) => {
         activeOpacity={0.9}
         onPress={() => alert('Stay Tuned')}>
         <View style={styles.start}>
-          <Text style={styles.startIcon}>#</Text>
+          <Icon name="lock-outline" size={30} />
           <Text style={styles.startText}>Change Password</Text>
         </View>
         <View>
@@ -67,7 +67,7 @@ const Profile = ({navigation}) => {
         activeOpacity={0.9}
         onPress={handleSignout}>
         <View style={styles.start}>
-          <Text style={styles.startIcon}>#</Text>
+          <Icon name="exit-to-app" size={30} />
           <Text style={styles.startText}>Logout</Text>
         </View>
         <View>

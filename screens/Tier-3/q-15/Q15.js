@@ -2,7 +2,6 @@ import {
   View,
   Text,
   TouchableOpacity,
-  ScrollView,
   TextInput,
   Modal,
   Image,
@@ -16,10 +15,11 @@ import {
   getQ15Location,
 } from '../../../redux/apiCalls';
 import {useDispatch, useSelector} from 'react-redux';
-import {Button, CalendarDate, Q15Row} from '../../../components';
+import {Button, CalendarDate, Q15Row, Tabs} from '../../../components';
 import {Dropdown} from 'react-native-element-dropdown';
 import DatePicker from 'react-native-date-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Q15 = ({navigation, route}) => {
   const {patient} = route.params;
@@ -90,6 +90,10 @@ const Q15 = ({navigation, route}) => {
   const [open, setOpen] = useState(false);
   const [selectedDateIndex, setSelectedDateIndex] = useState(3);
   const hoursArray = Array.from({length: 24}, (_, index) => index); // Create an array from 0 to 23
+  const hoursSubarrays = [];
+  for (let i = 0; i < hoursArray.length; i += 6) {
+    hoursSubarrays.push(hoursArray.slice(i, i + 6));
+  }
   const generateNextFourDates = () => {
     const today = new Date();
     const nextFourDates = [];
@@ -105,11 +109,12 @@ const Q15 = ({navigation, route}) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Image
+        {/* <Image
           source={require('../../../assets/images/avatar2.png')}
           resizeMode="contain"
           style={{width: 50, height: 40}}
-        />
+        /> */}
+        <MCIcon name="account-check-outline" size={40} />
         <View>
           <Text style={styles.pName}>{patient.username}</Text>
           <Text>24 Yrs </Text>
@@ -135,7 +140,10 @@ const Q15 = ({navigation, route}) => {
           </TouchableOpacity>
         ))}
         <TouchableOpacity onPress={() => setOpen(true)}>
-          <CalendarDate date="📆" day="Change" />
+          <CalendarDate
+            date={<MCIcon name="calendar-month-outline" size={35} color="#0f3995"/>}
+            day="Change"
+          />
         </TouchableOpacity>
         <DatePicker
           date={date}
@@ -152,7 +160,7 @@ const Q15 = ({navigation, route}) => {
           }}
         />
       </View>
-      <View style={styles.stampTextContainer}>
+      {/* <View style={styles.stampTextContainer}>
         <Text style={styles.stampText}>0-15</Text>
         <Text style={styles.stampText}>15-30</Text>
         <Text style={styles.stampText}>30-45</Text>
@@ -174,7 +182,93 @@ const Q15 = ({navigation, route}) => {
             }}
           />
         ))}
-      </ScrollView>
+      </ScrollView> */}
+      <Tabs
+        FirstRoute={() => {
+          return (
+            <View>
+              {hoursSubarrays[0].map(hour => (
+                <Q15Row
+                  key={hour}
+                  hour={hour.toString().padStart(2, '0')}
+                  date={date}
+                  onPressBox={async (stamp, id) => {
+                    await AsyncStorage.setItem('stamp', stamp);
+                    setStamp1(stamp);
+                    setBoxNo(id);
+                    setHours(hour.toString().padStart(2, '0'));
+                    setShowModal(true);
+                    console.log(stamp1);
+                  }}
+                />
+              ))}
+            </View>
+          );
+        }}
+        SecondRoute={() => {
+          return (
+            <View>
+              {hoursSubarrays[1].map(hour => (
+                <Q15Row
+                  key={hour}
+                  hour={hour.toString().padStart(2, '0')}
+                  date={date}
+                  onPressBox={async (stamp, id) => {
+                    await AsyncStorage.setItem('stamp', stamp);
+                    setStamp1(stamp);
+                    setBoxNo(id);
+                    setHours(hour.toString().padStart(2, '0'));
+                    setShowModal(true);
+                    console.log(stamp1);
+                  }}
+                />
+              ))}
+            </View>
+          );
+        }}
+        ThirdRoute={() => {
+          return (
+            <View>
+              {hoursSubarrays[2].map(hour => (
+                <Q15Row
+                  key={hour}
+                  hour={hour.toString().padStart(2, '0')}
+                  date={date}
+                  onPressBox={async (stamp, id) => {
+                    await AsyncStorage.setItem('stamp', stamp);
+                    setStamp1(stamp);
+                    setBoxNo(id);
+                    setHours(hour.toString().padStart(2, '0'));
+                    setShowModal(true);
+                    console.log(stamp1);
+                  }}
+                />
+              ))}
+            </View>
+          );
+        }}
+        FourthRoute={() => {
+          return (
+            <View>
+              {hoursSubarrays[3].map(hour => (
+                <Q15Row
+                  key={hour}
+                  hour={hour.toString().padStart(2, '0')}
+                  date={date}
+                  onPressBox={async (stamp, id) => {
+                    await AsyncStorage.setItem('stamp', stamp);
+                    setStamp1(stamp);
+                    setBoxNo(id);
+                    setHours(hour.toString().padStart(2, '0'));
+                    setShowModal(true);
+                    console.log(stamp1);
+                  }}
+                />
+              ))}
+            </View>
+          );
+        }}
+      />
       {showModal && (
         <Modal
           transparent={true}
