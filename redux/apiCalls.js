@@ -23,7 +23,7 @@ export const GetOrganization = async dispatch => {
   // dispatch(apiCallStart());
   console.log('Hello');
   try {
-    const res = await axios.get(`${baseURL}/org/orgname`);
+    const res = await axios.get(`${baseURL}/org/name`);
     console.log(res.data);
     // await AsyncStorage.setItem('organization', res.data);
     await dispatch(orgSuccess(res.data));
@@ -53,6 +53,10 @@ export const Login2 = async (userInfo, dispatch, navigation) => {
       await AsyncStorage.setItem(
         'expireTime',
         res.data.data.session.expireTime,
+      );
+      await AsyncStorage.setItem(
+        'resetCount',
+        JSON.stringify(res.data.data.resetCount),
       );
     } else {
       dispatch(apiCallError(res.data.message.description));
@@ -219,8 +223,9 @@ export const getAllPatients = async dispatch => {
 };
 export const getQ15Location = async dispatch => {
   dispatch(apiCallStart());
+  console.log("HEllo");
   try {
-    const res = await axios.get(`${baseURL}/get/yjwP03Ts6p`);
+    const res = await axios.get(`${baseURL}/get/KaZpMIPOKQ`);
     console.log(res.data);
     dispatch(getQ15LocationSuccess(res.data.location));
   } catch (error) {
@@ -231,7 +236,7 @@ export const getQ15Location = async dispatch => {
 export const getQ15Activity = async dispatch => {
   dispatch(apiCallStart());
   try {
-    const res = await axios.get(`${baseURL}/get/j7w9HB7YbL`);
+    const res = await axios.get(`${baseURL}/get/vrJi9HLQLZ`);
     console.log(res.data);
     dispatch(getQ15ActivitySuccess(res.data.activity));
   } catch (error) {
@@ -275,7 +280,7 @@ export const getQ15Config = async (dispatch, pid) => {
   try {
     const res = await axios.get(`${baseURL}/config/getById/${pid}`);
     console.log(res.data);
-    dispatch(getQ15ConfigSuccess(res.data));
+    dispatch(getQ15ConfigSuccess(res.data.data));
   } catch (error) {
     dispatch(apiCallError(error.response.data.errorMessage));
     console.log(error.response.data.errorMessage);

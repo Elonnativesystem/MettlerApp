@@ -1,23 +1,18 @@
 import {View, Text, ScrollView, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
-import Icon from 'react-native-vector-icons/Ionicons';
 import {styles} from './styles';
 
 const Patients = ({navigation}) => {
   const handleAssignedPatients = async () => {
-    // alert('Assigned Patients = 007');
     navigation.navigate('AssignedPatients');
   };
   const handleAllPatients = async () => {
-    // alert('All Patients = 008');
     navigation.navigate('AllPatients');
   };
   const handleCurrentPatients = async () => {
-    // alert('Current Patients = 009');
     navigation.navigate('CurrentPatients');
   };
   const handleTodayPatients = async () => {
-    // alert('Today Patients = 010');
     navigation.navigate('TodayAdmitted');
   };
   return (

@@ -1,5 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {View, TextInput, StyleSheet, Button} from 'react-native';
+import {View, TextInput} from 'react-native';
+import {styles} from './styles';
 
 const OtpBox = ({length = 6, onOtpChange}) => {
   const [otp, setOtp] = useState(Array.from({length}, () => ''));
@@ -8,16 +9,12 @@ const OtpBox = ({length = 6, onOtpChange}) => {
   const handleOtpChange = (index, value) => {
     const newOtp = [...otp];
     newOtp[index] = value;
-
     if (value !== '') {
       if (index < length - 1) {
         otpBoxes.current[index + 1].focus();
       }
     }
-
     setOtp(newOtp);
-
-    // Pass the entered OTP to the parent component
     onOtpChange(newOtp.join(''));
   };
 
@@ -25,19 +22,14 @@ const OtpBox = ({length = 6, onOtpChange}) => {
     if (value === '') {
       const newOtp = [...otp];
       newOtp[index] = '';
-
       if (index > 0) {
         otpBoxes.current[index - 1].focus();
       }
-
       setOtp(newOtp);
-
-      // Pass the entered OTP to the parent component
       onOtpChange(newOtp.join(''));
     }
   };
   useEffect(() => {
-    // Automatically focus on the first input when the component renders
     otpBoxes.current[0].focus();
   }, []);
 
@@ -59,35 +51,8 @@ const OtpBox = ({length = 6, onOtpChange}) => {
           ref={ref => (otpBoxes.current[index] = ref)}
         />
       ))}
-      {/* <Button title="Get PIN" onPress={() => onOtpChange(otp.join(''))} /> */}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: '5%',
-  },
-  otpBox: {
-    width: 50,
-    height: 50,
-    // width: '15%',
-    // height: '160%',
-    borderWidth: 1,
-
-    borderColor: 'black',
-    textAlign: 'center',
-    fontSize: 22,
-    marginRight: 10,
-  },
-  otpBoxFilled: {
-    borderColor: '#0f3995',
-    borderWidth: 3, // Change color when filled
-    borderRadius: 10,
-  },
-});
 
 export default OtpBox;

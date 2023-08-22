@@ -20,7 +20,7 @@ export const styles = StyleSheet.create({
     width: '100%',
   },
   boxWithData: {
-    backgroundColor: '#2e6aea',
+    backgroundColor: '#B1CDF8',
   },
   hourColumn: {
     width: 40,
@@ -36,9 +36,9 @@ export const styles = StyleSheet.create({
   box: {
     width: 65,
     height: 65,
-    backgroundColor: '#ccc',
+    backgroundColor: '#F8FAFB',
     borderColor: '#808080',
-    borderWidth: 1,
+    borderWidth: 0.3,
     justifyContent: 'center',
     alignItems: 'center',
     // marginLeft:10

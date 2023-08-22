@@ -16,8 +16,6 @@ export const styles = StyleSheet.create({
   },
   start: {
     flexDirection: 'row',
-    // width: '60%',
-    // justifyContent: 'space-between',
   },
   startText: {
     marginHorizontal: 10,

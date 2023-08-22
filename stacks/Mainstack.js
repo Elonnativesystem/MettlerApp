@@ -2,26 +2,19 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import React, {useEffect, useState} from 'react';
 import {
   AdminConfiguration,
-  Dashboard,
   OrganizationDetails,
   PatientManagement,
   PatientStaffAssign,
-  Patients,
   Profile,
-  ScreenA,
-  ScreenB,
 } from '../screens';
-import CustomDrawer from '../components/CustomDrawer';
 import StaffDetails from '../screens/staffDetails/StaffDetails';
-import Header from '../components/header/Header';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {useDispatch, useSelector} from 'react-redux';
 import Toast from 'react-native-simple-toast';
 import PatientsStacks from './PatientsStacks';
 import {Alert, SafeAreaView, Text} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Logout} from '../redux/apiCalls';
-import {Button} from '../components';
+import {Button, Header, CustomDrawer} from '../components';
 
 const Drawer = createDrawerNavigator();
 const Mainstack = ({navigation}) => {
@@ -35,7 +28,6 @@ const Mainstack = ({navigation}) => {
   }, [errorMsg]);
   const username = useSelector(state => state.user.userInfo.username);
   const jwt = useSelector(state => state.user.userInfo.jwt);
-  // const role = useSelector(state => state.user.userInfo.role);
   const dispatch = useDispatch();
   const checkSessionExpiration = async () => {
     const expirationTime = await AsyncStorage.getItem('expireTime');
@@ -72,16 +64,18 @@ const Mainstack = ({navigation}) => {
       },
     ]);
   };
-  const getRole = async () => {
+  const getRoleAndResetCount = async () => {
     try {
       const role = await AsyncStorage.getItem('role');
+      const count = await AsyncStorage.getItem('resetCount');
       setRole(role);
+      console.log(role, count);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
-    getRole();
+    getRoleAndResetCount();
   }, []);
   return (
     <>
@@ -89,7 +83,6 @@ const Mainstack = ({navigation}) => {
         <Drawer.Navigator
           drawerContent={props => <CustomDrawer {...props} />}
           screenOptions={{
-            // headerShown: false,
             drawerActiveBackgroundColor: '#2e6aea',
             drawerActiveTintColor: '#fff',
             header: ({navigation}) => <Header navigation={navigation} />,

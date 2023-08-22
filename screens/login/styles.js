@@ -15,7 +15,6 @@ export const styles = StyleSheet.create({
     height: 100,
   },
   topContainer: {
-    // backgroundColor: '#0f3995',
     height: '75%',
     width: '100%',
     borderBottomLeftRadius: 40,
@@ -29,7 +28,6 @@ export const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 10,
     padding: 20,
-    // borderWidth: 1,
   },
   helloText: {
     fontWeight: '700',
@@ -55,8 +53,6 @@ export const styles = StyleSheet.create({
     height: '90%',
   },
   eyeIcon: {
-    // width: '5%',
-    // height: '80%',
     position: 'absolute',
     right: '4%',
     top: '40%',
@@ -77,7 +73,6 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    // bottom: 50,
     top: 20,
     borderRadius: 6,
     position: 'relative',

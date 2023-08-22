@@ -2,22 +2,14 @@ import {
   View,
   Text,
   SafeAreaView,
-  ScrollView,
   Image,
   TouchableOpacity,
   FlatList,
 } from 'react-native';
 import React, {useEffect} from 'react';
 import {styles} from './styles';
-import Icon from 'react-native-vector-icons/Ionicons';
 import {useDispatch, useSelector} from 'react-redux';
 import Toast from 'react-native-simple-toast';
-import {
-  apiCallError,
-  apiCallStart,
-  apiCallSuccess,
-} from '../../../redux/userSlice';
-import axios from 'axios';
 import {Loader} from '../../../components';
 import {getAllPatients} from '../../../redux/apiCalls';
 
@@ -50,7 +42,6 @@ const AssignedPatients = ({navigation}) => {
       </View>
       <View style={styles.flatList}>
         <FlatList
-          // contentContainerStyle={styles.flatList}
           data={data}
           renderItem={({item, index}) => (
             <TouchableOpacity

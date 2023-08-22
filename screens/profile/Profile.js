@@ -1,16 +1,15 @@
 import {View, Text, TouchableOpacity, Alert} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {Logout} from '../../redux/apiCalls';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Profile = ({navigation}) => {
-  const username = useSelector(state => state.user.userInfo.username);
-  // const jwt = useSelector(state => state.user.userInfo.jwt);
   const dispatch = useDispatch();
   const handleSignout = async () => {
     const jwt = await AsyncStorage.getItem('jwt');
+    const username = await AsyncStorage.getItem('username');
     Alert.alert('MettlerHealthCare', 'Are You sure to Sign out ?', [
       {
         text: 'OK',

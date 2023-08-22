@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
   ForgotPassword,
@@ -11,31 +11,12 @@ import {
   ResetSuccess,
   SecretKey,
 } from '../screens';
-import {GetOrganization, RetriveLogin} from '../redux/apiCalls';
-import {useDispatch} from 'react-redux';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
 
 const Authstack = () => {
-  // const [initialRoute, setInitialRoute] = useState('Login');
-  // const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     await RetriveLogin(dispatch);
-  //     const retrive = await AsyncStorage.getItem('retrive');
-  //     setInitialRoute(retrive === 'true' ? 'SecretKey' : 'Login');
-  //   };
-
-  //   fetchData();
-  // }, []);
-
   return (
-    <Stack.Navigator
-      screenOptions={{headerShown: false}}
-      // initialRouteName={initialRoute}
-    >
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="SecretKey" component={SecretKey} />
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />

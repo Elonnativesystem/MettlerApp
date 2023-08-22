@@ -25,23 +25,10 @@ const Login = ({navigation}) => {
   const [value, setValue] = useState('');
   const [isFocus, setIsFocus] = useState(false);
   const [show, setShow] = useState(true);
-  // useEffect(() => {
-  //   GetOrganization(dispatch);
-  // }, []);
   const data = OrgData.map(item => ({
-    label: item.name, // Assuming 'name' is within 'organizationdetails'
+    label: item.name,
     value: item.id,
   }));
-  // const data = [
-  //   {label: 'MHC-1', value: 'iganPg3GY9'},
-  //   {label: 'MHC-2', value: 'ZHZYMHXi5E'},
-  //   {label: 'MHC_2', value: 'tstGfLpPR2'},
-  //   {label: 'Item 4', value: '4'},
-  //   {label: 'Item 5', value: '5'},
-  //   {label: 'Item 6', value: '6'},
-  //   {label: 'Item 7', value: '7'},
-  //   {label: 'Item 8', value: '8'},
-  // ];
 
   const handleLogin = async () => {
     Login2(
@@ -86,8 +73,6 @@ const Login = ({navigation}) => {
         <Text style={[styles.subText, darkMode && {color: '#fff'}]}>
           Login to your account
         </Text>
-        {/* {errorMsg && <Text style={styles.errorText}>{errorMsg}</Text>} */}
-
         <View style={[styles.inputView, darkMode && {borderColor: '#fff'}]}>
           <Image
             source={require('../../assets/images/profile.png')}
@@ -127,17 +112,6 @@ const Login = ({navigation}) => {
         </View>
 
         <View style={[styles.inputView, darkMode && {borderColor: '#fff'}]}>
-          {/* <Image
-            source={require('../../assets/images/organization.png')}
-            resizeMode="contain"
-            style={[styles.inputIcon, darkMode && {tintColor: '#fff'}]}
-          /> */}
-          {/* <TextInput
-            placeholder="Organization"
-            value="MHC-1 (Can't Change)"
-            aria-disabled
-            style={[styles.input, darkMode && {color: '#fff'}]}
-          /> */}
           <Dropdown
             style={[styles.input, isFocus && {borderColor: 'blue'}]}
             placeholderStyle={{marginLeft: '3%'}}
@@ -171,7 +145,6 @@ const Login = ({navigation}) => {
           />
         </View>
         <View style={styles.subLoginContainer}>
-          {/* <TouchableOpacity></TouchableOpacity> */}
           <Text style={darkMode && {color: '#fff'}}>Remember Me</Text>
           <TouchableOpacity
             onPress={() => navigation.navigate('ForgotPassword')}>

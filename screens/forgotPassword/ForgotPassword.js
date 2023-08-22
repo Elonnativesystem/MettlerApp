@@ -10,7 +10,6 @@ import {
 import React, {useEffect, useState} from 'react';
 import {styles} from './styles';
 import {Button, Loader} from '../../components';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {ForgotPassword1} from '../../redux/apiCalls';
 import {useDispatch, useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';

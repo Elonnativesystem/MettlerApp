@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  FlatList,
   TouchableOpacity,
   ScrollView,
   TextInput,
@@ -17,7 +16,7 @@ import {
   getQ15Location,
 } from '../../../redux/apiCalls';
 import {useDispatch, useSelector} from 'react-redux';
-import {Button, Q15Row} from '../../../components';
+import {Button, CalendarDate, Q15Row} from '../../../components';
 import {Dropdown} from 'react-native-element-dropdown';
 import DatePicker from 'react-native-date-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -32,22 +31,20 @@ const Q15 = ({navigation, route}) => {
   const [value1, setValue1] = useState('');
   const [isFocus, setIsFocus] = useState(false);
   const [isFocus1, setIsFocus1] = useState(false);
-  const q15Location = useSelector(state => state.user.q15Location);
-  const q15Activity = useSelector(state => state.user.q15Activity);
-  const q15Load = useSelector(state => state.user.q15Load);
+  const {q15Load, q15Location, q15Activity} = useSelector(state => state.user);
   const username = useSelector(state => state.user.userInfo.username);
   const LocationData = [q15Location];
   const ActivityData = [q15Activity];
-  const transformedLocationData = Object.entries(LocationData[0]).map(
-    ([key, value], index) => ({
+  const transformedLocationData = Object.entries(LocationData[0])?.map(
+    ([key, value]) => ({
       label: `${key}-${value}`,
-      value: `${key}`, // Or any unique value you want to assign
+      value: `${key}`,
     }),
   );
   const transformedActivityData = Object.entries(ActivityData[0]).map(
-    ([key, value], index) => ({
+    ([key, value]) => ({
       label: `${key}-${value}`,
-      value: `${key}`, // Or any unique value you want to assign
+      value: `${key}`,
     }),
   );
 
@@ -61,13 +58,13 @@ const Q15 = ({navigation, route}) => {
   }, [q15Load]);
 
   const q15Slot = stamp1;
-
+  const q15Time = hours + `:${boxNo}`;
   const handleSubmit = async () => {
     const qYear = date.getFullYear().toString();
     const qMonth = (date.getMonth() + 1).toString().padStart(2, '0');
     const qDate = date.getDate().toString();
     const q15Date = qYear + qMonth + qDate;
-    const q15Time = hours + `:${boxNo}`;
+
     const pid = patient.id;
     if (value && value1) {
       await PostQ15Entry(
@@ -91,14 +88,27 @@ const Q15 = ({navigation, route}) => {
   };
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
+  const [selectedDateIndex, setSelectedDateIndex] = useState(3);
   const hoursArray = Array.from({length: 24}, (_, index) => index); // Create an array from 0 to 23
+  const generateNextFourDates = () => {
+    const today = new Date();
+    const nextFourDates = [];
+    for (let i = 0; i < 4; i++) {
+      const nextDate = new Date(date);
+      nextDate.setDate(today.getDate() - i);
+      nextFourDates.push(nextDate);
+    }
+    return nextFourDates;
+  };
+
+  const nextFourDates = generateNextFourDates();
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Image
-          source={require('../../../assets/images/avatar.png')}
+          source={require('../../../assets/images/avatar2.png')}
           resizeMode="contain"
-          style={{width: '20%'}}
+          style={{width: 50, height: 40}}
         />
         <View>
           <Text style={styles.pName}>{patient.username}</Text>
@@ -106,14 +116,27 @@ const Q15 = ({navigation, route}) => {
         </View>
       </View>
       <View style={styles.calendarHeader}>
-        {/* <Text>Calendar</Text> */}
-        <Button
-          label={`📆 (${date.getDate()} - ${date.toLocaleString('default', {
-            month: 'short',
-          })}) change date`}
-          onPress={() => setOpen(true)}
-          active
-        />
+        {nextFourDates.reverse().map((date1, index) => (
+          <TouchableOpacity
+            key={index}
+            activeOpacity={0.6}
+            onPress={() => {
+              setDate(date1);
+              setSelectedDateIndex(index);
+            }}>
+            <CalendarDate
+              bgColor={selectedDateIndex === index ? '#0f3995' : undefined} // Set background color conditionally
+              textColor={selectedDateIndex === index ? '#fff' : undefined} // Set background color conditionally
+              date={date1.getDate()}
+              day={date1
+                .toLocaleString('default', {weekday: 'short'})
+                .slice(0, 3)}
+            />
+          </TouchableOpacity>
+        ))}
+        <TouchableOpacity onPress={() => setOpen(true)}>
+          <CalendarDate date="📆" day="Change" />
+        </TouchableOpacity>
         <DatePicker
           date={date}
           onDateChange={setDate}
@@ -140,12 +163,12 @@ const Q15 = ({navigation, route}) => {
           <Q15Row
             key={hour}
             hour={hour.toString().padStart(2, '0')}
-            date={date} // Convert to 2-digit format
+            date={date}
             onPressBox={async (stamp, id) => {
               await AsyncStorage.setItem('stamp', stamp);
               setStamp1(stamp);
               setBoxNo(id);
-              setHours(hour.toString().padStart(2, '0')); // Convert to 2-digit format
+              setHours(hour.toString().padStart(2, '0'));
               setShowModal(true);
               console.log(stamp1);
             }}
@@ -164,67 +187,62 @@ const Q15 = ({navigation, route}) => {
               justifyContent: 'center',
               alignItems: 'center',
             }}
-            activeOpacity={1}
-            // onPress={() => setShowModal(false)} // Close modal when touching the overlay
-          >
+            activeOpacity={1}>
             {/* Your modal content */}
-            <View
-              style={{
-                backgroundColor: '#fff',
-                position: 'absolute',
-                width: '90%',
-                // top: '20%',
-                left: '5%',
-                padding: '5%',
-                borderWidth: 1,
-                flex: 1,
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}>
-                <Text>{patient.username} Q-15 Entry</Text>
+            <View style={styles.modalContainer}>
+              <View style={styles.modalHeader}>
+                <Text style={styles.modalHeaderText}>Enter Date and Time</Text>
                 <TouchableOpacity
                   activeOpacity={0.9}
-                  onPress={() => setShowModal(false)}
-                  style={{borderRadius: 10}}>
-                  <Text
-                    style={{
-                      color: 'red',
-                      fontSize: 20,
-                    }}>
-                    X
-                  </Text>
+                  onPress={() => setShowModal(false)}>
+                  <Text>❌</Text>
                 </TouchableOpacity>
               </View>
-              <Text>Date 📅</Text>
-              <View
-                style={{
-                  borderWidth: 0.6,
-                  padding: 10,
-                  marginBottom: 5,
-                  borderRadius: 6,
-                }}>
-                <TextInput value={date.toLocaleDateString()} editable={false} />
+              <Text style={{color: '#000'}}>Slot Name : {stamp1}</Text>
+              <View style={styles.modalDate}>
+                <Text style={styles.modalLabel}>Date </Text>
+                <View style={styles.modalInputView}>
+                  <TextInput
+                    value={date.toLocaleDateString()}
+                    editable={false}
+                    style={{color: '#000'}}
+                  />
+                </View>
               </View>
-              <Text>Entered By</Text>
-              <View
-                style={{
-                  borderWidth: 0.6,
-                  padding: 10,
-                  marginBottom: 5,
-                  borderRadius: 6,
-                }}>
-                <TextInput value={username} editable={false} />
+              <View style={{marginVertical: 5}}>
+                <Text style={styles.modalLabel}>Time Period</Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <View style={[styles.modalInputView, {width: '45%'}]}>
+                    <TextInput
+                      style={{color: '#000'}}
+                      value={q15Time}
+                      editable={false}
+                    />
+                  </View>
+                  <View style={[styles.modalInputView, {width: '45%'}]}>
+                    <TextInput
+                      value={`${q15Time.slice(0, 2)}:${parseInt(boxNo) + 14}`}
+                      editable={false}
+                      style={{color: '#000'}}
+                    />
+                  </View>
+                </View>
               </View>
-              <View
-                style={{
-                  borderWidth: 0.6,
-                  padding: 10,
-                  marginTop: 15,
-                  borderRadius: 6,
-                }}>
+
+              <Text style={styles.modalLabel}>Entered By</Text>
+              <View style={styles.modalInputView}>
+                <TextInput
+                  value={username}
+                  editable={false}
+                  style={{color: '#000'}}
+                />
+              </View>
+              <Text style={styles.modalLabel}>Location</Text>
+              <View style={[styles.modalInputView, {backgroundColor: '#fff'}]}>
                 <Dropdown
                   data={transformedLocationData}
                   search
@@ -243,14 +261,8 @@ const Q15 = ({navigation, route}) => {
                   }}
                 />
               </View>
-
-              <View
-                style={{
-                  borderWidth: 0.6,
-                  padding: 10,
-                  marginVertical: 15,
-                  borderRadius: 6,
-                }}>
+              <Text style={styles.modalLabel}>Condition</Text>
+              <View style={[styles.modalInputView, {backgroundColor: '#fff'}]}>
                 <Dropdown
                   data={transformedActivityData}
                   search
@@ -268,18 +280,6 @@ const Q15 = ({navigation, route}) => {
                     setIsFocus1(false);
                     console.log(stamp1);
                   }}
-                />
-              </View>
-              <View style={{flexDirection: 'row', gap: 40}}>
-                <TextInput
-                  value={hours}
-                  style={{borderWidth: 1, width: '20%', padding: 5}}
-                  editable={false}
-                />
-                <TextInput
-                  value={stamp1}
-                  style={{borderWidth: 1, width: '20%', padding: 5}}
-                  editable={false}
                 />
               </View>
 

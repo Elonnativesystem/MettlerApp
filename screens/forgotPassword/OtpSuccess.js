@@ -1,8 +1,15 @@
-import {View, Text, SafeAreaView, Image, TouchableOpacity, StatusBar} from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  Image,
+  TouchableOpacity,
+  StatusBar,
+} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import {Button, Loader} from '../../components';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 const OtpSuccess = ({navigation}) => {
   const {pending} = useSelector(state => state.user);
@@ -32,7 +39,7 @@ const OtpSuccess = ({navigation}) => {
           We sent OTP to you a email to reset password.
         </Text>
         <Button
-          onPress={() => navigation.navigate('OtpInput')} 
+          onPress={() => navigation.navigate('OtpInput')}
           label="OTP"
           active
         />

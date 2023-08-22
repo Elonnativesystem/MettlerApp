@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  Image,
-  ScrollView,
-  Pressable,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, Image, ScrollView} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import {
@@ -39,33 +32,6 @@ const PatientDetails = ({navigation, route}) => {
         />
 
         <View style={styles.pVitals}>
-          {/* <View>
-            <Text>
-              Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
-              {patient.basicDetails[0].name[0].given +
-                ' ' +
-                patient.basicDetails[0].name[0].family}
-            </Text>
-            <Text>
-              Gender &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:{' '}
-              {patient.basicDetails[0].gender}
-            </Text>
-            <Text>
-              DOB
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
-              {patient.basicDetails[0].birthDate}
-            </Text>
-            <Text>
-              Weight &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 58
-              KG
-            </Text>
-            <Text>
-              Height
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
-              171.5 CM
-            </Text>
-            <Text>Blood Group : B +ive</Text>
-          </View> */}
           <VitalBtnHorizontal icon="#" title="Height" value="171.5(cm)" />
           <VitalBtnHorizontal icon="#" title="Blood" value="B +ive" />
           <VitalBtnHorizontal icon="#" title="Weight" value="58(kg)" />

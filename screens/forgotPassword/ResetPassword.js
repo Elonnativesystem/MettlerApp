@@ -21,7 +21,6 @@ const ResetPassword = ({navigation}) => {
   const dispatch = useDispatch();
   const handleResetPassword = () => {
     ResetPassword1(password, cPassword, dispatch, navigation);
-    // alert('Hello');
   };
   useEffect(() => {
     {

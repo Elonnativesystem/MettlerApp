@@ -1,33 +1,15 @@
-import {
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  ActivityIndicator,
-  Alert,
-} from 'react-native';
-import React, {useEffect, useMemo, useState} from 'react';
+import {View, Text, FlatList, TouchableOpacity, Alert} from 'react-native';
+import React, {useMemo} from 'react';
 import {styles} from './styles';
 import {useSelector} from 'react-redux';
-import Loader from '../loader/Loader';
 
 const Q15Row = ({onPressBox, hour, date}) => {
   const q15Config = useSelector(state => state.user.q15Config);
-  const [loading, setLoading] = useState(true);
-  const memoizedQ15Config = useMemo(() => q15Config, [q15Config]);
+  const memoizedQ15Config = useMemo(() => q15Config || [], [q15Config]);
   const Year = date.getFullYear().toString();
   const Month = (date.getMonth() + 1).toString().padStart(2, '0');
   const Date = date.getDate().toString();
   const formattedDate = Year + Month + Date;
-  // useEffect(() => {
-  //   setLoading(true);
-  //   // Simulate an asynchronous data update
-  //   setTimeout(() => {
-  //     setLoading(false);
-  //   }, 1000); // Adjust the delay based on your actual data fetching
-  //   // You can also update other local state here if needed
-  // }, [memoizedQ15Config, hour, date]);
-  // const filteredData = q15Config.filter(entry => entry.q15Time === hour);
   const data = [
     {
       id: '00',
@@ -71,13 +53,10 @@ const Q15Row = ({onPressBox, hour, date}) => {
             <TouchableOpacity
               style={[
                 styles.box,
-                // loading
-                //   ? null
-                //   :
+                memoizedQ15Config?.length > 0 &&
                 memoizedQ15Config.some(
                   configItem =>
                     configItem.q15Slot === item.code + hour &&
-                    // configItem.q15Time === `${hour}:00` &&
                     configItem.q15Date === formattedDate &&
                     configItem.location &&
                     configItem.activity,
@@ -86,7 +65,6 @@ const Q15Row = ({onPressBox, hour, date}) => {
                   : null,
               ]}
               activeOpacity={0.8}
-              // onPress={async () => await onPressBox(item.code + hour, item.id)} // Use item.stamp here
               onPress={
                 memoizedQ15Config.some(
                   configItem =>
@@ -106,10 +84,9 @@ const Q15Row = ({onPressBox, hour, date}) => {
                 memoizedQ15Config.map(configItem => (
                   <View key={configItem.id}>
                     {configItem.q15Slot === item.code + hour &&
-                      // configItem.q15Time === `${hour}:00` &&
                       configItem.q15Date === formattedDate && (
-                        <Text style={{color: '#fff'}}>
-                          {configItem.location}/{configItem.activity}
+                        <Text style={{color: '#5E7494', fontSize: 20}}>
+                          {configItem.location}-{configItem.activity}
                         </Text>
                       )}
                   </View>

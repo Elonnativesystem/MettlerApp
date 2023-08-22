@@ -25,20 +25,13 @@ export const styles = StyleSheet.create({
   },
   pDetails: {
     flexDirection: 'row',
-    // marginTop: '-30%',
     height: 400,
-    // backgroundColor: '#8d8d8d',
-    // padding: 20,
-    // justifyContent: 'center',
     alignItems: 'center',
-    // height: '100%',
   },
   pVitals: {
-    // borderWidth: 1,
     padding: 5,
     justifyContent: 'center',
     margin: 10,
-    // marginLeft: '-20%',
   },
   vitalBtn2View: {
     flexDirection: 'row',

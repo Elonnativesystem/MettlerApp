@@ -6,8 +6,6 @@ const userSlice = createSlice({
     userInfo: {
       username: null,
       role: null,
-      // organization: 'iganPg3GY9', //(MHC-1)
-      // organization: 'Nchocpwdu0',  //(AIM)
       jwt: null,
       secretKey: null,
     },

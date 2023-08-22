@@ -4,13 +4,12 @@ import {
   SafeAreaView,
   Image,
   TextInput,
-  TouchableOpacity,
   StatusBar,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {styles} from './styles';
 import {Button, Loader} from '../../components';
-import {ForgotPassword1, ResetSecretKey1} from '../../redux/apiCalls';
+import {ResetSecretKey1} from '../../redux/apiCalls';
 import {useDispatch, useSelector} from 'react-redux';
 
 const ForgotSecretKey = ({navigation}) => {
@@ -60,11 +59,7 @@ const ForgotSecretKey = ({navigation}) => {
             onChangeText={text => setEmail(text)}
           />
         </View>
-        <Button
-          onPress={handleForgotSecretKey}
-          label="Send SecretKey"
-          active
-        />
+        <Button onPress={handleForgotSecretKey} label="Send SecretKey" active />
       </View>
     </SafeAreaView>
   );

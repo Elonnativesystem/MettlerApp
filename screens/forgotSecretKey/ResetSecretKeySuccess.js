@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  SafeAreaView,
-  Image,
-  TouchableOpacity,
-  StatusBar,
-} from 'react-native';
+import {View, Text, SafeAreaView, Image, StatusBar} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import {Button, Loader} from '../../components';

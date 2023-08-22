@@ -13,10 +13,10 @@ const PatientDetails2 = () => {
         </View>
       </View>
       <View style={styles2.calenderView}>
-        <CalendarDate date="Wed" day={16} />
-        <CalendarDate date="Thu" day={17} />
-        <CalendarDate date="Fri" day={18} />
-        <CalendarDate date="Sat" day={19} />
+        <CalendarDate day="Wed" date={16} />
+        <CalendarDate day="Thu" date={17} />
+        <CalendarDate day="Fri" date={18} />
+        <CalendarDate day="Sat" date={19} />
       </View>
       <View style={styles2.scheduleBtns}>
         <ScheduleBtn icon="#" header="Yoga" data="07:30-08:30" />
