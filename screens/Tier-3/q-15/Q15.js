@@ -4,6 +4,8 @@ import {
   TouchableOpacity,
   TextInput,
   Modal,
+  Pressable,
+  ActivityIndicator,
   Image,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
@@ -20,6 +22,7 @@ import {Dropdown} from 'react-native-element-dropdown';
 import DatePicker from 'react-native-date-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MIcon from 'react-native-vector-icons/MaterialIcons';
 
 const Q15 = ({navigation, route}) => {
   const {patient} = route.params;
@@ -33,20 +36,54 @@ const Q15 = ({navigation, route}) => {
   const [isFocus1, setIsFocus1] = useState(false);
   const {q15Load, q15Location, q15Activity} = useSelector(state => state.user);
   const username = useSelector(state => state.user.userInfo.username);
-  const LocationData = [q15Location];
-  const ActivityData = [q15Activity];
-  const transformedLocationData = Object.entries(LocationData[0])?.map(
-    ([key, value]) => ({
-      label: `${key}-${value}`,
-      value: `${key}`,
-    }),
-  );
-  const transformedActivityData = Object.entries(ActivityData[0]).map(
-    ([key, value]) => ({
-      label: `${key}-${value}`,
-      value: `${key}`,
-    }),
-  );
+  const LocationData = q15Location ? [q15Location] : [];
+  const ActivityData = q15Activity ? [q15Activity] : [];
+
+  const transformedLocationData = LocationData[0]
+    ? Object.entries(LocationData[0]).map(([key, value]) => ({
+        label: `${key}-${value}`,
+        value: `${key}`,
+      }))
+    : [];
+
+  const transformedActivityData = ActivityData[0]
+    ? Object.entries(ActivityData[0]).map(([key, value]) => ({
+        label: `${key}-${value}`,
+        value: `${key}`,
+      }))
+    : [];
+  const q15ActAndLocNotFound =
+    transformedLocationData.length === 0 ||
+    transformedActivityData.length === 0;
+
+  // if (q15ActAndLocNotFound) {
+  //   // Return loading indicator or placeholder component
+  //   return (
+  //     <View
+  //       style={{
+  //         flex: 1,
+  //         justifyContent: 'center',
+  //         alignItems: 'center',
+  //         backgroundColor: '#007DA6',
+  //       }}>
+  //       <Image
+  //         source={require('../../../assets/images/suc.jpg')}
+  //         resizeMode="contain"
+  //         style={{width: '100%', height: '80%'}}
+  //       />
+  //       <Text
+  //         style={{
+  //           fontSize: 20,
+  //           fontWeight: 'bold',
+  //           position: 'absolute',
+  //           top: '72%',
+  //           backgroundColor: '#007DA6',
+  //         }}>
+  //         We are Working on it
+  //       </Text>
+  //     </View>
+  //   );
+  // }
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -109,15 +146,21 @@ const Q15 = ({navigation, route}) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        {/* <Image
-          source={require('../../../assets/images/avatar2.png')}
-          resizeMode="contain"
-          style={{width: 50, height: 40}}
-        /> */}
-        <MCIcon name="account-check-outline" size={40} />
+        <Pressable
+          style={{flexDirection: 'row'}}
+          onPress={() => {
+            navigation.removeListener();
+            navigation.goBack();
+          }}>
+          <MIcon name="arrow-back" size={30} color="#fff" />
+          <View
+            style={{backgroundColor: '#8218', padding: 5, borderRadius: 15}}>
+            <MCIcon name="account" size={30} color="#fff" />
+          </View>
+        </Pressable>
         <View>
           <Text style={styles.pName}>{patient.username}</Text>
-          <Text>24 Yrs </Text>
+          <Text style={{color: '#fff'}}>24 Yrs </Text>
         </View>
       </View>
       <View style={styles.calendarHeader}>
@@ -130,8 +173,10 @@ const Q15 = ({navigation, route}) => {
               setSelectedDateIndex(index);
             }}>
             <CalendarDate
-              bgColor={selectedDateIndex === index ? '#0f3995' : undefined} // Set background color conditionally
-              textColor={selectedDateIndex === index ? '#fff' : undefined} // Set background color conditionally
+              bgColor={date.getDate() === date1.getDate() ? '#0f3995' : '#fff'} // Set background color conditionally
+              // bgColor={selectedDateIndex === index ? '#0f3995' : undefined} // Set background color conditionally
+              textColor={date.getDate() === date1.getDate() ? '#fff' : '#000'} // Set background color conditionally
+              // textColor={selectedDateIndex === index ? '#fff' : undefined} // Set background color conditionally
               date={date1.getDate()}
               day={date1
                 .toLocaleString('default', {weekday: 'short'})
@@ -139,10 +184,22 @@ const Q15 = ({navigation, route}) => {
             />
           </TouchableOpacity>
         ))}
-        <TouchableOpacity onPress={() => setOpen(true)}>
+        <TouchableOpacity
+          onPress={() => {
+            setOpen(true);
+          }}>
           <CalendarDate
-            date={<MCIcon name="calendar-month-outline" size={35} color="#0f3995"/>}
-            day="Change"
+            day={
+              <>
+                <MCIcon name="calendar-search" size={15} />
+                <Text>
+                  {date.toLocaleString('default', {month: 'short'}).slice(0, 3)}
+                </Text>
+              </>
+            }
+            date={date.getDate()}
+            bgColor={selectedDateIndex > 5 ? '#2e6aea' : '#2e6aea'}
+            textColor={'#fff'}
           />
         </TouchableOpacity>
         <DatePicker
@@ -154,6 +211,7 @@ const Q15 = ({navigation, route}) => {
           onConfirm={date => {
             setOpen(false);
             setDate(date);
+            setSelectedDateIndex(100);
           }}
           onCancel={() => {
             setOpen(false);
@@ -289,7 +347,7 @@ const Q15 = ({navigation, route}) => {
                 <TouchableOpacity
                   activeOpacity={0.9}
                   onPress={() => setShowModal(false)}>
-                  <Text>❌</Text>
+                  <MCIcon name="close-circle-outline" size={30} />
                 </TouchableOpacity>
               </View>
               <Text style={{color: '#000'}}>Slot Name : {stamp1}</Text>
@@ -336,7 +394,11 @@ const Q15 = ({navigation, route}) => {
                 />
               </View>
               <Text style={styles.modalLabel}>Location</Text>
-              <View style={[styles.modalInputView, {backgroundColor: '#fff'}]}>
+              <View
+                style={[
+                  styles.modalInputView,
+                  {backgroundColor: '#fff', padding: 6},
+                ]}>
                 <Dropdown
                   data={transformedLocationData}
                   search
@@ -356,7 +418,11 @@ const Q15 = ({navigation, route}) => {
                 />
               </View>
               <Text style={styles.modalLabel}>Condition</Text>
-              <View style={[styles.modalInputView, {backgroundColor: '#fff'}]}>
+              <View
+                style={[
+                  styles.modalInputView,
+                  {backgroundColor: '#fff', padding: 6},
+                ]}>
                 <Dropdown
                   data={transformedActivityData}
                   search
@@ -377,8 +443,20 @@ const Q15 = ({navigation, route}) => {
                 />
               </View>
 
-              <View style={{alignItems: 'center'}}>
-                <Button label="Submit" active onPress={handleSubmit} />
+              <View
+                style={{
+                  alignItems: 'center',
+                  flexDirection: 'row',
+                  gap: 10,
+                  justifyContent: 'flex-end',
+                }}>
+                <Button
+                  label="Cancel"
+                  cancel
+                  half
+                  onPress={() => setShowModal(false)}
+                />
+                <Button label="Save" active half onPress={handleSubmit} />
               </View>
             </View>
           </TouchableOpacity>

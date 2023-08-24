@@ -20,9 +20,13 @@ const PatientDetails2 = () => {
         <CalendarDate day="Sat" date={19} />
       </View>
       <View style={styles2.scheduleBtns}>
-        <ScheduleBtn icon="#" header="Yoga" data="07:30-08:30" />
-        <ScheduleBtn icon="#" header="Generic Checkup" data="08:00-08:15" />
-        <ScheduleBtn icon="#" header="Breakfast" data="08:30-09:00" />
+        <ScheduleBtn icon="yoga" header="Yoga" data="07:30-08:30" />
+        <ScheduleBtn
+          icon="head-check-outline"
+          header="Generic Checkup"
+          data="08:00-08:15"
+        />
+        <ScheduleBtn icon="food" header="Breakfast" data="08:30-09:00" />
       </View>
       <View style={styles2.ECGview}>
         <HeartECG />

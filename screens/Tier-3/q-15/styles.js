@@ -6,13 +6,16 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    backgroundColor: '#ccc',
+    backgroundColor: '#0f3995',
     flexDirection: 'row',
     padding: 10,
+    gap: 10,
+    alignItems: 'center',
   },
   pName: {
     fontSize: 20,
     fontWeight: '500',
+    color: '#fff',
   },
   timeColumn: {
     marginRight: 10,
@@ -79,7 +82,7 @@ export const styles = StyleSheet.create({
   },
   modalInputView: {
     borderWidth: 0.6,
-    padding: 8,
+    // padding: 2,
     marginBottom: 5,
     borderRadius: 3,
     backgroundColor: '#DBE5F2',

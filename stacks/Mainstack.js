@@ -10,7 +10,7 @@ import {
 import StaffDetails from '../screens/staffDetails/StaffDetails';
 import {useDispatch, useSelector} from 'react-redux';
 import Toast from 'react-native-simple-toast';
-import PatientsStacks from './PatientsStacks';
+import PatientsStacks from './patientsStacks/PatientsStacks';
 import {Alert, SafeAreaView, Text} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Logout} from '../redux/apiCalls';

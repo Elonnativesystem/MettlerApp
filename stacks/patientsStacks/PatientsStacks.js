@@ -8,7 +8,7 @@ import {
   Patients,
   Q15,
   TodayAdmitted,
-} from '../screens';
+} from '../../screens';
 const Stack = createNativeStackNavigator();
 const PatientsStacks = () => {
   return (

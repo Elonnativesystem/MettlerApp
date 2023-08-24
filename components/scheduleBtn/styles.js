@@ -6,16 +6,13 @@ export const styles = StyleSheet.create({
     backgroundColor: '#E6E1F9',
     height: 80,
     flexDirection: 'row',
-    gap: 40,
+    // gap: 40,
     alignItems: 'center',
     borderRadius: 8,
     marginVertical: '2%',
   },
   iconView: {
     margin: '5%',
-  },
-  icon: {
-    fontSize: 40,
   },
   headerView: {
     gap: 5,

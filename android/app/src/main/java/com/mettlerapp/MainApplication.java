@@ -1,5 +1,5 @@
 package com.mettlerapp;
-
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import android.app.Application;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
@@ -14,6 +14,7 @@ public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =
       new DefaultReactNativeHost(this) {
+        
         @Override
         public boolean getUseDeveloperSupport() {
           return BuildConfig.DEBUG;
@@ -27,7 +28,13 @@ public class MainApplication extends Application implements ReactApplication {
           // packages.add(new MyReactNativePackage());
           return packages;
         }
-
+        // @Override
+        // protected List<ReactPackage> getPackages() {
+        //     return Arrays.<ReactPackage>asList(
+        //             new MainReactPackage(),
+        //     new SplashScreenReactPackage()  //here
+        //     );
+        // }
         @Override
         protected String getJSMainModuleName() {
           return "index";

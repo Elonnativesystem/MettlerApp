@@ -1,4 +1,8 @@
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
+
+const windowWidth = Dimensions.get('window').width;
+const boxWidth = (windowWidth - 40) / 4.4; // Assuming you want 4 boxes in a row
+const boxHeight = boxWidth * 0.7; // Adjust the aspect ratio as needed
 
 export const styles = StyleSheet.create({
   stampBox: {
@@ -6,23 +10,21 @@ export const styles = StyleSheet.create({
     // marginRight: 20, // Adjust this value to control spacing between stamp and box
   },
   stampBoxContainer: {
-    marginLeft: 20,
+    // marginHorizontal: 20,
     width: '100%',
+    justifyContent: 'center',
   },
   stampText: {
     fontSize: 14,
     fontWeight: 'bold',
   },
   boxView: {
-    // marginLeft: 55,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
+    // flexDirection: 'row',
     marginTop: 10,
   },
   boxWithData: {
     backgroundColor: '#BCD3F5',
-    borderWidth:0
+    borderWidth: 0,
   },
   hourColumn: {
     width: 40,
@@ -36,8 +38,8 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   box: {
-    width: 79,
-    height: 58,
+    width: boxWidth,
+    height: boxHeight,
     backgroundColor: '#F8FAFB',
     borderColor: '#6581BC',
     borderWidth: 2,

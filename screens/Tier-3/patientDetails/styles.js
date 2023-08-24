@@ -10,6 +10,7 @@ export const styles = StyleSheet.create({
     backgroundColor: '#0f3995',
     flexDirection: 'row',
     alignItems: 'center',
+    padding:10
   },
   arrow: {
     color: '#fff',
@@ -43,7 +44,8 @@ export const styles = StyleSheet.create({
     width: '90%',
     backgroundColor: '#0f3995',
     padding: 10,
-    // justifyContent: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     // alignItems: 'center',
     borderRadius: 5,
     height: 50,

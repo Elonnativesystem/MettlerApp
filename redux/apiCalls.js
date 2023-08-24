@@ -225,8 +225,8 @@ export const getQ15Location = async dispatch => {
   dispatch(apiCallStart());
   console.log("HEllo");
   try {
-    const res = await axios.get(`${baseURL}/get/KaZpMIPOKQ`);
-    console.log(res.data);
+    const res = await axios.get(`${baseURL}/get/wg2rzH0Yjj`);
+    // console.log(res.data);
     dispatch(getQ15LocationSuccess(res.data.location));
   } catch (error) {
     dispatch(apiCallError(error.response.data.errorMessage));
@@ -236,8 +236,8 @@ export const getQ15Location = async dispatch => {
 export const getQ15Activity = async dispatch => {
   dispatch(apiCallStart());
   try {
-    const res = await axios.get(`${baseURL}/get/vrJi9HLQLZ`);
-    console.log(res.data);
+    const res = await axios.get(`${baseURL}/get/l6gsqwczMR`);
+    // console.log(res.data);
     dispatch(getQ15ActivitySuccess(res.data.activity));
   } catch (error) {
     dispatch(apiCallError(error.response.data.errorMessage));
@@ -279,7 +279,7 @@ export const getQ15Config = async (dispatch, pid) => {
   dispatch(apiCallStart());
   try {
     const res = await axios.get(`${baseURL}/config/getById/${pid}`);
-    console.log(res.data);
+    // console.log(res.data);
     dispatch(getQ15ConfigSuccess(res.data.data));
   } catch (error) {
     dispatch(apiCallError(error.response.data.errorMessage));
