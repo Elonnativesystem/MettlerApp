@@ -61,18 +61,25 @@ const Login = ({navigation}) => {
         textStyle={{color: '#0f3995'}}
       />
       <StatusBar barStyle={'light-content'} />
-      <ImageBackground
+      <KeyboardAvoidingView style={styles.topContainer}>
+  <ImageBackground
         source={require('../../assets/images/background.png')}
         style={styles.topContainer}>
-        <KeyboardAvoidingView style={styles.header}>
+          <KeyboardAvoidingView>
+            <View style={styles.header}>
           <Image
             source={require('../../assets/images/logoHeader.png')}
             resizeMode="contain"
             style={styles.headerImage}
           />
-        </KeyboardAvoidingView>
+        </View>
+          </KeyboardAvoidingView>
+        
       </ImageBackground>
 
+
+      </KeyboardAvoidingView>
+    
       <View
         style={[styles.loginContainer, darkMode && {backgroundColor: '#000'}]}>
         <Text style={[styles.helloText, darkMode && {color: '#fff'}]}>

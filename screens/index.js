@@ -1,4 +1,3 @@
-
 import AdminConfiguration from './adminConfiguration/AdminConfiguration';
 import Dashboard from './dashboard/Dashboard';
 import ForgotPassword from './forgotPassword/ForgotPassword';
@@ -21,9 +20,11 @@ import TodayAdmitted from './Tier-2/todayAdmittedPatients/TodayAdmitted';
 import PatientDetails from './Tier-3/patientDetails/PatientDetails';
 import Q15 from './Tier-3/q-15/Q15';
 import Profile from './profile/Profile';
+import AllActiveQ15 from './Tier-2/allActiveQ15/AllActiveQ15';
 
 export {
   AdminConfiguration,
+  AllActiveQ15,
   AllPatients,
   AssignedPatients,
   CurrentPatients,

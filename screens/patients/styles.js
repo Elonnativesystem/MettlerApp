@@ -18,14 +18,14 @@ export const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
-    marginHorizontal: '5%',
+    // marginHorizontal: '5%',
     marginTop: '3%',
   },
   outerBtn: {
     width: 150,
     height: 150,
     backgroundColor: '#EBF9EB',
-    margin: '3%',
+    marginHorizontal: '3%',
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',

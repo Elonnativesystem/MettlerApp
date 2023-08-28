@@ -12,10 +12,10 @@ export const styles = StyleSheet.create({
   },
   headerImage: {
     width: '70%',
-    height: 100,
+    height: "60%",
   },
   topContainer: {
-    height: '75%',
+    height: '82%',
     width: '100%',
     borderBottomLeftRadius: 40,
     borderBottomRightRadius: 40,

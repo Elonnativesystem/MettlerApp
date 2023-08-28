@@ -3,6 +3,7 @@ import React from 'react';
 import {styles2} from './styles2';
 import {CalendarDate, HeartECG, ScheduleBtn} from '../../../components';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 const PatientDetails2 = () => {
   return (
     <View style={styles2.container}>
@@ -28,8 +29,18 @@ const PatientDetails2 = () => {
         />
         <ScheduleBtn icon="food" header="Breakfast" data="08:30-09:00" />
       </View>
-      <View style={styles2.ECGview}>
-        <HeartECG />
+      <View style={styles2.activeOrders}>
+        <View style={styles2.ordersHeader}>
+          <Text>Active Orders</Text>
+          <TouchableOpacity>
+            <Text>View All</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles2.orderContainer}>
+          <Text>Order - 1</Text>
+          <Text>Order - 2</Text>
+          <Text>Order - 3</Text>
+        </View>
       </View>
     </View>
   );

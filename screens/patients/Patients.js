@@ -16,6 +16,9 @@ const Patients = ({navigation}) => {
   const handleTodayPatients = async () => {
     navigation.navigate('TodayAdmitted');
   };
+  const handleActiveQ15 = async () => {
+    navigation.navigate('AllActiveQ15');
+  };
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -23,7 +26,32 @@ const Patients = ({navigation}) => {
         <MIcon name="people-outline" size={30} />
         <Text style={styles.headerText}> Patients</Text>
       </View>
-      <View style={styles.row}>
+      <View style={[styles.row, {justifyContent: 'center', width: '100%'}]}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={handleActiveQ15}
+          style={{width: '100%', alignItems: 'center'}}>
+          <View
+            style={[
+              styles.outerBtn,
+              {backgroundColor: '#FAECDB', width: '90%',},
+            ]}>
+            <View
+              style={[
+                styles.innerBtn,
+                {backgroundColor: '#EFDAC0', width: '75%'},
+              ]}>
+              <Text style={[styles.centerText, {color: '#925D1E'}]}>
+                Q-15 Entry
+              </Text>
+            </View>
+            <Text style={[styles.bottomText, {color: '#925D1E'}]}>
+              All Active Patients
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+      <View style={[styles.row, {justifyContent: 'center'}]}>
         <TouchableOpacity activeOpacity={0.8} onPress={handleAssignedPatients}>
           <View style={styles.outerBtn}>
             <View style={styles.innerBtn}>
@@ -43,7 +71,7 @@ const Patients = ({navigation}) => {
           </View>
         </TouchableOpacity>
       </View>
-      <View style={styles.row}>
+      <View style={[styles.row, {justifyContent: 'center'}]}>
         <TouchableOpacity activeOpacity={0.8} onPress={handleCurrentPatients}>
           <View style={[styles.outerBtn, {backgroundColor: '#EDF1FA'}]}>
             <View style={[styles.innerBtn, {backgroundColor: '#D9E2F5'}]}>

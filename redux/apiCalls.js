@@ -4,6 +4,8 @@ import {
   apiCallError,
   apiCallStart,
   apiCallSuccess,
+  getCompletedQ15Success,
+  getIncompletedQ15Success,
   getQ15ActivitySuccess,
   getQ15ConfigSuccess,
   getQ15LocationSuccess,
@@ -213,7 +215,7 @@ export const ResetSecretKey1 = async (email, dispatch, navigation) => {
 export const getAllPatients = async dispatch => {
   dispatch(apiCallStart());
   try {
-    const res = await axios.get(`${baseURL}/patient/get_all`);
+    const res = await axios.get(`${baseURL}/patient/get/activePatient`);
     // console.log(res.data);
     dispatch(allPatientsSuccess(res.data));
   } catch (error) {
@@ -223,11 +225,11 @@ export const getAllPatients = async dispatch => {
 };
 export const getQ15Location = async dispatch => {
   dispatch(apiCallStart());
-  console.log("HEllo");
+  console.log('HEllo');
   try {
     const res = await axios.get(`${baseURL}/get/wg2rzH0Yjj`);
     // console.log(res.data);
-    dispatch(getQ15LocationSuccess(res.data.location));
+    dispatch(getQ15LocationSuccess(res.data.data.Q15Form.location));
   } catch (error) {
     dispatch(apiCallError(error.response.data.errorMessage));
     console.log(error.response);
@@ -238,7 +240,7 @@ export const getQ15Activity = async dispatch => {
   try {
     const res = await axios.get(`${baseURL}/get/l6gsqwczMR`);
     // console.log(res.data);
-    dispatch(getQ15ActivitySuccess(res.data.activity));
+    dispatch(getQ15ActivitySuccess(res.data.data.Q15Form.activity));
   } catch (error) {
     dispatch(apiCallError(error.response.data.errorMessage));
     console.log(error.response);
@@ -249,9 +251,9 @@ export const PostQ15Entry = async (
   value,
   value1,
   q15Date,
-  q15Time,
-  q15Slot,
-  enteredBy,
+  stamp,
+  slot,
+  username,
   dispatch,
 ) => {
   dispatch(apiCallStart());
@@ -260,14 +262,14 @@ export const PostQ15Entry = async (
     const res = await axios.post(`${baseURL}/config/register`, {
       pid,
       q15Date,
-      q15Time,
-      q15Slot,
+      q15Time: stamp,
+      q15Slot: slot,
       location: value,
       activity: value1,
-      enteredBy,
+      enteredBy: username,
     });
-    console.log(res.data);
-    console.log(q15Slot);
+    // console.log(res.data);
+    // console.log(q15Slot);
     dispatch(postQ15EntrySuccess());
   } catch (error) {
     dispatch(apiCallError(error.response.data.errorMessage));
@@ -287,10 +289,28 @@ export const getQ15Config = async (dispatch, pid) => {
   }
 };
 
-export const getQ15BySlot = async (dispatch, q15Slot) => {
+export const getCompletedQ15 = async (dispatch, q15Slot, q15Date) => {
   dispatch(apiCallStart());
   try {
-    const res = await axios.get(`${baseURL}/config/getBySlot/${q15Slot}`);
+    const res = await axios.get(
+      `${baseURL}/config/get/completed/${q15Slot}/${q15Date}`,
+    );
+    dispatch(getCompletedQ15Success(res.data.data));
+    console.log(res.data);
+  } catch (error) {
+    dispatch(apiCallError(error.response.data.errorMessage));
+    console.log(error.response);
+  }
+};
+
+export const getIncompletedQ15 = async (dispatch, q15Slot, q15Date) => {
+  dispatch(apiCallStart());
+  try {
+    const res = await axios.get(
+      `${baseURL}/config/get/notCompleted/${q15Slot}/${q15Date}`,
+    );
+    dispatch(getIncompletedQ15Success(res.data.data));
+    console.log(res.data);
   } catch (error) {
     dispatch(apiCallError(error.response.data.errorMessage));
     console.log(error.response.data.errorMessage);

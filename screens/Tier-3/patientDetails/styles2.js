@@ -35,7 +35,19 @@ export const styles2 = StyleSheet.create({
     alignItems: 'center',
     marginTop: '5%',
   },
-  ECGview: {
-    alignItems: 'center',
+  activeOrders: {
+    // alignItems: 'center',
+    width: '90%',
+    height: '40%',
+    backgroundColor: '#fff',
+    marginVertical: '2%',
+    // alignItems: 'center',
+  },
+  ordersHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  orderContainer: {
+    alignItems:"center"
   },
 });

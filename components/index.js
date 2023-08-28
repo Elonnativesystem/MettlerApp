@@ -3,6 +3,7 @@ import CustomDrawer from './customDrawer/CustomDrawer';
 import Header from './header/Header';
 import HeartECG from './heartECG/HeartECG';
 import Loader from './loader/Loader';
+import MyModal from './modal/Modal';
 import OtpBox from './otpBox/OtpBox';
 import Button from './primaryButton/Button';
 import Q15Row from './q15Row/Q15Row';
@@ -18,6 +19,7 @@ export {
   HeartECG,
   Header,
   Loader,
+  MyModal,
   OtpBox,
   Q15Row,
   ScheduleBtn,

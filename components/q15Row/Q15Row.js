@@ -92,9 +92,18 @@ const Q15Row = ({onPressBox, hour, date}) => {
                   <View key={configItem.id}>
                     {configItem.q15Slot === item.code + hour &&
                       configItem.q15Date === formattedDate && (
-                        <Text style={{color: '#5E7494', fontSize: 20}}>
-                          {configItem.location}-{configItem.activity}
-                        </Text>
+                        <TouchableOpacity
+                          activeOpacity={0.8}
+                          onPress={() => {
+                            Alert.alert(
+                              'Mettler Health Care Q15 Form',
+                              `Date : ${configItem.q15Date}\nLocation : ${configItem.location}\nActivity : ${configItem.activity}\nEntered By : ${configItem.enteredBy}\nSlot Name : ${configItem.q15Slot}`,
+                            );
+                          }}>
+                          <Text style={{color: '#5E7494', fontSize: 20}}>
+                            {configItem.location}-{configItem.activity}
+                          </Text>
+                        </TouchableOpacity>
                       )}
                   </View>
                 ))

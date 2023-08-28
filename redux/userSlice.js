@@ -14,6 +14,8 @@ const userSlice = createSlice({
     q15Location: [],
     q15Activity: [],
     q15Config: [],
+    q15Completed: [],
+    q15Incompleted: [],
     q15Load: false,
     pending: false,
     retrive: false,
@@ -94,6 +96,14 @@ const userSlice = createSlice({
       state.pending = false;
       state.q15Config = action.payload;
     },
+    getCompletedQ15Success: (state, action) => {
+      state.pending = false;
+      state.q15Completed = action.payload;
+    },
+    getIncompletedQ15Success: (state, action) => {
+      state.pending = false;
+      state.q15Incompleted = action.payload;
+    },
   },
 });
 
@@ -104,6 +114,8 @@ export const {
   apiCallSuccess,
   forgotPasswordSuccess,
   getQ15ActivitySuccess,
+  getCompletedQ15Success,
+  getIncompletedQ15Success,
   getQ15ConfigSuccess,
   getQ15LocationSuccess,
   loginSuccess,

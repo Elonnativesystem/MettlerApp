@@ -5,8 +5,6 @@ import {
   TextInput,
   Modal,
   Pressable,
-  ActivityIndicator,
-  Image,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {styles} from './styles';
@@ -26,8 +24,10 @@ import MIcon from 'react-native-vector-icons/MaterialIcons';
 
 const Q15 = ({navigation, route}) => {
   const {patient} = route.params;
+  const [username, setUsername] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [stamp1, setStamp1] = useState('');
+  const [slot, setSlot] = useState(null);
   const [hours, setHours] = useState('00');
   const [boxNo, setBoxNo] = useState('');
   const [value, setValue] = useState('');
@@ -35,20 +35,20 @@ const Q15 = ({navigation, route}) => {
   const [isFocus, setIsFocus] = useState(false);
   const [isFocus1, setIsFocus1] = useState(false);
   const {q15Load, q15Location, q15Activity} = useSelector(state => state.user);
-  const username = useSelector(state => state.user.userInfo.username);
+  // const username = useSelector(state => state.user.userInfo.username);
   const LocationData = q15Location ? [q15Location] : [];
   const ActivityData = q15Activity ? [q15Activity] : [];
 
   const transformedLocationData = LocationData[0]
     ? Object.entries(LocationData[0]).map(([key, value]) => ({
-        label: `${key}-${value}`,
+        label: `${value}`,
         value: `${key}`,
       }))
     : [];
 
   const transformedActivityData = ActivityData[0]
     ? Object.entries(ActivityData[0]).map(([key, value]) => ({
-        label: `${key}-${value}`,
+        label: `${value}`,
         value: `${key}`,
       }))
     : [];
@@ -89,19 +89,20 @@ const Q15 = ({navigation, route}) => {
   useEffect(() => {
     getQ15Location(dispatch);
     getQ15Activity(dispatch);
+    console.log(transformedActivityData);
   }, []);
   useEffect(() => {
     getQ15Config(dispatch, patient.id);
   }, [q15Load]);
 
-  const q15Slot = stamp1;
-  const q15Time = hours + `:${boxNo}`;
+  const q15Time = hours + `${boxNo}`;
   const handleSubmit = async () => {
+    const slot = stamp1;
     const qYear = date.getFullYear().toString();
     const qMonth = (date.getMonth() + 1).toString().padStart(2, '0');
     const qDate = date.getDate().toString();
     const q15Date = qYear + qMonth + qDate;
-
+    const stamp = `${q15Time}-${q15Time.slice(0, 2)}${parseInt(boxNo) + 15}`;
     const pid = patient.id;
     if (value && value1) {
       await PostQ15Entry(
@@ -109,8 +110,8 @@ const Q15 = ({navigation, route}) => {
         value,
         value1,
         q15Date,
-        q15Time,
-        q15Slot,
+        stamp,
+        slot,
         username,
         dispatch,
       );
@@ -141,6 +142,21 @@ const Q15 = ({navigation, route}) => {
     }
     return nextFourDates;
   };
+  const calculateSlot = async time => {
+    const username = await AsyncStorage.getItem('username');
+    setUsername(username);
+    const hours = time.getHours();
+    const minutes = time.getMinutes();
+
+    const hourChar = String.fromCharCode(65 + hours); // A, B, C, ...
+    const quarter = Math.floor(minutes / 15) + 1; // 1, 2, 3, 4
+
+    const slotName = `${hourChar}${quarter.toString().padStart(2, '0')}`;
+    setSlot(slotName);
+  };
+  useEffect(() => {
+    calculateSlot(date);
+  }, []);
 
   const nextFourDates = generateNextFourDates();
   return (
@@ -377,7 +393,14 @@ const Q15 = ({navigation, route}) => {
                   </View>
                   <View style={[styles.modalInputView, {width: '45%'}]}>
                     <TextInput
-                      value={`${q15Time.slice(0, 2)}:${parseInt(boxNo) + 14}`}
+                     value={
+                      boxNo < 44
+                        ? `${q15Time.slice(0, 2)}${(parseInt(boxNo) + 15).toString().padStart(2, '0')}`
+                        : `${
+                            (parseInt(q15Time.slice(0, 2).padStart(2, '0')) + 1).toString().padStart(2, '0')
+                          }00`
+                    }
+                      // value={`${q15Time.slice(0, 2)}${parseInt(boxNo) + 15}`}
                       editable={false}
                       style={{color: '#000'}}
                     />
