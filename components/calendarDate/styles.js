@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     padding: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 0.17,
+    // borderWidth: 0.17,
     borderRadius: 10,
     borderColor: '#8d8d8d',
   },
@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     height: '55%',
   },
   dateText: {
-    fontSize: 30,
+    fontSize: 23,
     color: '#000',
     fontWeight: 'bold',
   },
@@ -23,6 +23,7 @@ export const styles = StyleSheet.create({
     borderTopWidth: 1,
     width: '100%',
     borderColor: '#ccc',
+    padding:5
   },
   dayText: {
     textAlign: 'center',

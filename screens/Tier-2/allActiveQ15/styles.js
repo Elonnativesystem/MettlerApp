@@ -29,6 +29,7 @@ export const styles = StyleSheet.create({
   },
   pBtn: {
     maxHeight: 60,
+    width: '90%',
   },
   patientUname: {
     fontSize: 15,
@@ -60,6 +61,7 @@ export const styles = StyleSheet.create({
     // marginBottom: '10%',
     // flex: 1,
     paddingVertical: 10,
+    // flex: 1,
     // height:"75%"
   },
   modalContainer: {
@@ -67,8 +69,8 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     width: '90%',
     left: '5%',
-    padding: '5%',
-    borderWidth: 1,
+    padding: '7%',
+    borderRadius: 15,
     flex: 1,
   },
   modalHeader: {
@@ -89,8 +91,9 @@ export const styles = StyleSheet.create({
   modalInputView: {
     borderWidth: 0.6,
     // padding: 2,
-    marginBottom: 5,
+    marginVertical: '2%',
     borderRadius: 3,
     backgroundColor: '#DBE5F2',
+    borderColor: '#999999',
   },
 });

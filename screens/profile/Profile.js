@@ -31,11 +31,11 @@ const Profile = ({navigation}) => {
         activeOpacity={0.9}
         onPress={() => alert('Stay Tuned')}>
         <View style={styles.start}>
-          <Icon name="account-circle" size={30} />
+          <Icon name="account-circle" size={25} />
           <Text style={styles.startText}>My Profile</Text>
         </View>
         <View>
-          <Text style={styles.EndIcon}>&gt;</Text>
+          <Icon name="arrow-forward-ios" size={25} />
         </View>
       </TouchableOpacity>
       <TouchableOpacity
@@ -43,11 +43,11 @@ const Profile = ({navigation}) => {
         activeOpacity={0.9}
         onPress={() => alert('Stay Tuned')}>
         <View style={styles.start}>
-          <Icon name="edit" size={30} />
+          <Icon name="edit" size={25} />
           <Text style={styles.startText}>Edit Profile</Text>
         </View>
         <View>
-          <Text style={styles.EndIcon}>&gt;</Text>
+           <Icon name="arrow-forward-ios" size={25} />
         </View>
       </TouchableOpacity>
       <TouchableOpacity
@@ -55,11 +55,11 @@ const Profile = ({navigation}) => {
         activeOpacity={0.9}
         onPress={() => alert('Stay Tuned')}>
         <View style={styles.start}>
-          <Icon name="lock-outline" size={30} />
+          <Icon name="lock-outline" size={25} />
           <Text style={styles.startText}>Change Password</Text>
         </View>
         <View>
-          <Text style={styles.EndIcon}>&gt;</Text>
+           <Icon name="arrow-forward-ios" size={25} />
         </View>
       </TouchableOpacity>
       <TouchableOpacity
@@ -67,11 +67,11 @@ const Profile = ({navigation}) => {
         activeOpacity={0.9}
         onPress={handleSignout}>
         <View style={styles.start}>
-          <Icon name="exit-to-app" size={30} />
+          <Icon name="exit-to-app" size={25} />
           <Text style={styles.startText}>Logout</Text>
         </View>
         <View>
-          <Text style={styles.EndIcon}>&gt;</Text>
+           <Icon name="arrow-forward-ios" size={25} />
         </View>
       </TouchableOpacity>
     </View>

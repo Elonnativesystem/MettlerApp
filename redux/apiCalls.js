@@ -213,9 +213,10 @@ export const ResetSecretKey1 = async (email, dispatch, navigation) => {
 };
 
 export const getAllPatients = async dispatch => {
+  const org = await AsyncStorage.getItem('org');
   dispatch(apiCallStart());
   try {
-    const res = await axios.get(`${baseURL}/patient/get/activePatient`);
+    const res = await axios.get(`${baseURL}/patient/get/activePatient/${org}`);
     // console.log(res.data);
     dispatch(allPatientsSuccess(res.data));
   } catch (error) {
@@ -290,13 +291,15 @@ export const getQ15Config = async (dispatch, pid) => {
 };
 
 export const getCompletedQ15 = async (dispatch, q15Slot, q15Date) => {
+  const org = await AsyncStorage.getItem('org');
   dispatch(apiCallStart());
   try {
     const res = await axios.get(
-      `${baseURL}/config/get/completed/${q15Slot}/${q15Date}`,
+      `${baseURL}/config/get/completed/${q15Slot}/${q15Date}/${org}`,
     );
     dispatch(getCompletedQ15Success(res.data.data));
     console.log(res.data);
+    console.log(org);
   } catch (error) {
     dispatch(apiCallError(error.response.data.errorMessage));
     console.log(error.response);
@@ -304,10 +307,11 @@ export const getCompletedQ15 = async (dispatch, q15Slot, q15Date) => {
 };
 
 export const getIncompletedQ15 = async (dispatch, q15Slot, q15Date) => {
+  const org = await AsyncStorage.getItem('org');
   dispatch(apiCallStart());
   try {
     const res = await axios.get(
-      `${baseURL}/config/get/notCompleted/${q15Slot}/${q15Date}`,
+      `${baseURL}/config/get/notCompleted/${q15Slot}/${q15Date}/${org}`,
     );
     dispatch(getIncompletedQ15Success(res.data.data));
     console.log(res.data);

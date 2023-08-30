@@ -34,19 +34,17 @@ const Patients = ({navigation}) => {
           <View
             style={[
               styles.outerBtn,
-              {backgroundColor: '#FAECDB', width: '90%',},
+              {backgroundColor: '#FAECDB', width: '90%'},
             ]}>
             <View
               style={[
                 styles.innerBtn,
                 {backgroundColor: '#EFDAC0', width: '75%'},
               ]}>
-              <Text style={[styles.centerText, {color: '#925D1E'}]}>
-                Q-15 Entry
-              </Text>
+              <Text style={[styles.centerText, {color: '#925D1E'}]}>Q-15</Text>
             </View>
             <Text style={[styles.bottomText, {color: '#925D1E'}]}>
-              All Active Patients
+              Q-15 Patient Check
             </Text>
           </View>
         </TouchableOpacity>
@@ -57,7 +55,7 @@ const Patients = ({navigation}) => {
             <View style={styles.innerBtn}>
               <Text style={styles.centerText}>007</Text>
             </View>
-            <Text style={styles.bottomText}>Assigned By Me</Text>
+            <Text style={styles.bottomText}>My Patients</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity activeOpacity={0.8} onPress={handleAllPatients}>

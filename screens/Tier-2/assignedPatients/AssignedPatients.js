@@ -13,6 +13,7 @@ import Toast from 'react-native-simple-toast';
 import {Loader} from '../../../components';
 import {getAllPatients} from '../../../redux/apiCalls';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 const AssignedPatients = ({navigation}) => {
   const dispatch = useDispatch();
   const {pending} = useSelector(state => state.user);
@@ -37,7 +38,7 @@ const AssignedPatients = ({navigation}) => {
         textStyle={{color: '#0f3995'}}
       />
       <View style={styles.header}>
-        <Text style={styles.headerText}>Assigned by me</Text>
+        <Text style={styles.headerText}>My Patients</Text>
         {/* <Text style={{fontSize: 30}}> 🔎</Text> */}
         <MIcon name="search" size={30} />
       </View>
@@ -57,7 +58,7 @@ const AssignedPatients = ({navigation}) => {
                   resizeMode="contain"
                   style={{width: '10%', height: '100%'}}
                 /> */}
-                <MIcon name="no-accounts" size={60} />
+                <MCIcon name="account-circle" size={40} color="#8d8d8d" />
                 <View style={styles.nameView}>
                   <Text style={styles.patientUname}>{item.username}</Text>
                   <Text style={styles.patientName}>

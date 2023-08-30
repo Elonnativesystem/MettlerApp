@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
   },
   headerImage: {
     width: '70%',
-    height: "60%",
+    height: '60%',
   },
   topContainer: {
     height: '82%',
@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
   },
   helloText: {
     fontWeight: '700',
-    color: '#000',
+    color: 'rgb(65, 80, 118)',
     fontSize: 30,
     marginTop: '7%',
   },
@@ -39,6 +39,7 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: '4%',
     marginBottom: '10%',
+    color: 'rgb(65, 80, 118)',
   },
   inputView: {
     borderWidth: 0.6,

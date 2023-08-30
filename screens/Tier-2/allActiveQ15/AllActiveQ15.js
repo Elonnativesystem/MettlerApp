@@ -24,7 +24,10 @@ import MIcon from 'react-native-vector-icons/MaterialIcons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Dropdown} from 'react-native-element-dropdown';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Dimensions} from 'react-native';
+
 const AllActiveQ15 = ({navigation}) => {
+  const screenHeight = Dimensions.get('window').height;
   const date = new Date();
   const [pid, setPid] = useState(null);
   const [pname, setPname] = useState(null);
@@ -44,7 +47,6 @@ const AllActiveQ15 = ({navigation}) => {
   const errorMsg = useSelector(state => state.user.error);
   const completedData = useSelector(state => state.user.q15Completed);
   const incompletedData = useSelector(state => state.user.q15Incompleted);
-  const data1 = useSelector(state => state.user.allPatients);
   const {q15Location, q15Activity} = useSelector(state => state.user);
   const LocationData = q15Location ? [q15Location] : [];
   const ActivityData = q15Activity ? [q15Activity] : [];
@@ -105,10 +107,24 @@ const AllActiveQ15 = ({navigation}) => {
     }
   }, [errorMsg]);
   useEffect(() => {
-    calculateSlot(time);
-    // getCompletedQ15(dispatch, slot, q15Date);
-    // getIncompletedQ15(dispatch, slot, q15Date);
-  }, [slot, q15Date, complete]);
+    const now = new Date();
+    const minutes = now.getMinutes();
+    const millisecondsUntilNextQuarterHour = (15 - (minutes % 15)) * 60 * 1000; // Calculate milliseconds until the next quarter-hour mark
+
+    // Call calculateSlot immediately when the component mounts
+    calculateSlot(now);
+
+    // Set up an interval to call calculateSlot at the nearest quarter-hour mark
+    const interval = setInterval(() => {
+      calculateSlot(new Date());
+    }, millisecondsUntilNextQuarterHour);
+
+    // Clean up the interval when the component unmounts
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   useEffect(() => {
     if (slot && q15Date) {
       getCompletedQ15(dispatch, slot, q15Date);
@@ -150,14 +166,14 @@ const AllActiveQ15 = ({navigation}) => {
         setComplete(!complete);
       } else {
         alert('Please select the options');
-        console.log(q15Slot);
+        console.log(slot);
       }
     } catch (error) {
       console.log(error);
     }
   };
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <View style={{flex: 1}}>
       <Loader
         visible={pending}
         textContent="Fetching Data"
@@ -170,7 +186,22 @@ const AllActiveQ15 = ({navigation}) => {
         {/* <Text style={{fontSize: 30}}> 🔎</Text> */}
         <MIcon name="search" size={30} />
       </View>
-      <View style={[styles.flatList, {height: '50%'}]}>
+      <View style={{borderWidth: 1, padding: 5, alignItems: 'center'}}>
+        <Text style={{fontSize: 15}}>
+          Day: {date.toLocaleDateString('en-US', {weekday: 'long'})}
+        </Text>
+        <Text style={{fontSize: 15}}>
+          Slot : {stamp1} to {stamp2}
+        </Text>
+        <Text style={{fontSize: 15}}>Entered By : {username}</Text>
+      </View>
+      <View
+        style={[
+          styles.flatList,
+          {
+            height: incompletedData.length < 0 ? screenHeight * 0.5 : 'auto',
+          },
+        ]}>
         <Text
           style={{
             textAlign: 'center',
@@ -178,16 +209,20 @@ const AllActiveQ15 = ({navigation}) => {
             fontSize: 20,
             lineHeight: 25,
             textDecorationStyle: 'double',
-            color: '#fff',
-            backgroundColor: '#5d8bef',
+            color: '#000',
+            backgroundColor: '#d9d9d9',
             padding: 10,
+            fontWeight: '700',
           }}>
           Pending
         </Text>
         {incompletedData.length <= 0 ? (
           <View
-            style={{justifyContent: 'center', flex: 1, alignItems: 'center'}}>
-            <Text>
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text style={{marginTop: '2%'}}>
               Every Active Patients Q15 Form is completed for {stamp1}
             </Text>
             <TouchableOpacity
@@ -211,6 +246,81 @@ const AllActiveQ15 = ({navigation}) => {
           <FlatList
             data={incompletedData}
             renderItem={({item, index}) => (
+              <View
+                style={{alignItems: 'center', padding: 5, marginBottom: 10}}>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  style={styles.pBtn}
+                  onPress={() =>
+                    handlePatientPress(
+                      item.id,
+                      item.basicDetails[0].name[0].given +
+                        ' ' +
+                        item.basicDetails[0].name[0].family,
+                    )
+                  }>
+                  <View style={styles.patientView}>
+                    {/* <Image
+                    source={require('../../../assets/images/avatar2.png')}
+                    resizeMode="contain"
+                    style={{width: '10%', height: '100%'}}
+                  /> */}
+                    <MCIcon name="account-circle" size={35} color="#8d8d8d" />
+                    <View style={styles.nameView}>
+                      <Text style={styles.patientUname}>{item.username}</Text>
+                      <Text style={styles.patientName}>
+                        {item.basicDetails[0].name[0].given
+                          .charAt(0)
+                          .toUpperCase() +
+                          item.basicDetails[0].name[0].given.slice(1)}{' '}
+                        {item.basicDetails[0].name[0].family}
+                      </Text>
+                    </View>
+                    {/* <View style={styles.orgView}>
+                    <Text style={styles.orgName}>Room No : {index + 1}</Text>
+                  </View> */}
+                    <View style={styles.arrowView}>
+                      {/* <Text style={styles.arrow}>＞</Text> */}
+                      <MIcon
+                        name="arrow-forward-ios"
+                        size={25}
+                        color="#8d8d8d"
+                      />
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            )}
+          />
+        )}
+      </View>
+      {/* </RefreshControl> */}
+      <View
+        style={[
+          styles.flatList,
+          {
+            height: completedData.length <= 2 ? screenHeight * 0.6 : 'auto',
+          },
+          {flex: 1},
+        ]}>
+        <Text
+          style={{
+            textAlign: 'center',
+            textDecorationLine: 'underline',
+            fontSize: 20,
+            lineHeight: 25,
+            textDecorationStyle: 'double',
+            color: '#000',
+            backgroundColor: '#d9d9d9',
+            padding: 10,
+            fontWeight: '700',
+          }}>
+          Completed
+        </Text>
+        <FlatList
+          data={completedData}
+          renderItem={({item, index}) => (
+            <View style={{alignItems: 'center', padding: 5, marginBottom: 10}}>
               <TouchableOpacity
                 activeOpacity={0.8}
                 style={styles.pBtn}
@@ -228,7 +338,7 @@ const AllActiveQ15 = ({navigation}) => {
                     resizeMode="contain"
                     style={{width: '10%', height: '100%'}}
                   /> */}
-                  <MIcon name="no-accounts" size={30} color="#000" />
+                  <MCIcon name="account-circle" size={30} color="#8d8d8d" />
                   <View style={styles.nameView}>
                     <Text style={styles.patientUname}>{item.username}</Text>
                     <Text style={styles.patientName}>
@@ -238,71 +348,15 @@ const AllActiveQ15 = ({navigation}) => {
                     </Text>
                   </View>
                   {/* <View style={styles.orgView}>
-                    <Text style={styles.orgName}>Room No : {index + 1}</Text>
-                  </View> */}
+                  <Text style={styles.orgName}>Room No : {index + 1}</Text>
+                </View> */}
                   <View style={styles.arrowView}>
                     {/* <Text style={styles.arrow}>＞</Text> */}
                     <MIcon name="arrow-forward-ios" size={25} color="#8d8d8d" />
                   </View>
                 </View>
               </TouchableOpacity>
-            )}
-          />
-        )}
-      </View>
-      {/* </RefreshControl> */}
-      <View style={[styles.flatList, {flex: 1}]}>
-        <Text
-          style={{
-            textAlign: 'center',
-            textDecorationLine: 'underline',
-            fontSize: 20,
-            lineHeight: 25,
-            textDecorationStyle: 'double',
-            color: '#fff',
-            backgroundColor: '#5d8bef',
-            padding: 10,
-          }}>
-          Completed
-        </Text>
-        <FlatList
-          data={completedData}
-          renderItem={({item, index}) => (
-            <TouchableOpacity
-              activeOpacity={0.8}
-              style={styles.pBtn}
-              onPress={() =>
-                handlePatientPress(
-                  item.id,
-                  item.basicDetails[0].name[0].given +
-                    ' ' +
-                    item.basicDetails[0].name[0].family,
-                )
-              }>
-              <View style={styles.patientView}>
-                {/* <Image
-                    source={require('../../../assets/images/avatar2.png')}
-                    resizeMode="contain"
-                    style={{width: '10%', height: '100%'}}
-                  /> */}
-                <MIcon name="no-accounts" size={30} color="#000" />
-                <View style={styles.nameView}>
-                  <Text style={styles.patientUname}>{item.username}</Text>
-                  <Text style={styles.patientName}>
-                    {item.basicDetails[0].name[0].given +
-                      ' ' +
-                      item.basicDetails[0].name[0].family}
-                  </Text>
-                </View>
-                {/* <View style={styles.orgView}>
-                  <Text style={styles.orgName}>Room No : {index + 1}</Text>
-                </View> */}
-                <View style={styles.arrowView}>
-                  {/* <Text style={styles.arrow}>＞</Text> */}
-                  <MIcon name="arrow-forward-ios" size={25} color="#8d8d8d" />
-                </View>
-              </View>
-            </TouchableOpacity>
+            </View>
           )}
         />
       </View>
@@ -339,7 +393,7 @@ const AllActiveQ15 = ({navigation}) => {
             activeOpacity={1}>
             {/* Your modal content */}
             <View style={styles.modalContainer}>
-              <View
+              {/* <View
                 style={{
                   backgroundColor: '#0f3995',
                   padding: 10,
@@ -347,12 +401,45 @@ const AllActiveQ15 = ({navigation}) => {
                   alignItems: 'center',
                   marginVertical: 5,
                   borderRadius: 20,
-                }}>
-                <Text style={{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>
-                  {pname}
-                </Text>
+                }}> */}
+              <View style={{marginLeft: '90%'}}>
+                <TouchableOpacity
+                  activeOpacity={0.9}
+                  onPress={() => {
+                    setOk(false);
+                  }}>
+                  <MCIcon
+                    name="close-circle-outline"
+                    size={30}
+                    color="#8d8d8d"
+                  />
+                </TouchableOpacity>
               </View>
-              <View style={styles.modalHeader}>
+
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  borderBottomWidth: 0.2,
+                  paddingVertical: 5,
+                  marginBottom: '4%',
+                }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    gap: 10,
+                    justifyContent: 'center',
+                  }}>
+                  <MCIcon name="account-circle" size={30} color="#8d8d8d" />
+                  <Text
+                    style={{fontSize: 20, fontWeight: 'bold', color: '#000'}}>
+                    {pname}
+                  </Text>
+                </View>
+              </View>
+
+              {/* </View> */}
+              {/* <View style={styles.modalHeader}>
                 <Text style={styles.modalHeaderText}>Enter Date and Time</Text>
                 <TouchableOpacity
                   activeOpacity={0.9}
@@ -361,10 +448,10 @@ const AllActiveQ15 = ({navigation}) => {
                   }}>
                   <MCIcon name="close-circle-outline" size={30} />
                 </TouchableOpacity>
-              </View>
-              <Text style={{color: '#000'}}>Slot Name : {slot}</Text>
+              </View> */}
+              {/* <Text style={{color: '#000'}}>Slot Name : {slot}</Text> */}
 
-              <View style={styles.modalDate}>
+              {/* <View style={styles.modalDate}>
                 <Text style={styles.modalLabel}>Date </Text>
                 <View style={styles.modalInputView}>
                   <TextInput
@@ -396,17 +483,17 @@ const AllActiveQ15 = ({navigation}) => {
                     />
                   </View>
                 </View>
-              </View>
+              </View> */}
 
-              <Text style={styles.modalLabel}>Entered By</Text>
+              {/* <Text style={styles.modalLabel}>Entered By</Text>
               <View style={styles.modalInputView}>
                 <TextInput
                   value={username}
                   editable={false}
                   style={{color: '#000'}}
                 />
-              </View>
-              <Text style={styles.modalLabel}>Location</Text>
+              </View> */}
+              {/* <Text style={styles.modalLabel}>Location</Text> */}
               <View
                 style={[
                   styles.modalInputView,
@@ -430,7 +517,7 @@ const AllActiveQ15 = ({navigation}) => {
                   }}
                 />
               </View>
-              <Text style={styles.modalLabel}>Condition</Text>
+              {/* <Text style={styles.modalLabel}>Condition</Text> */}
               <View
                 style={[
                   styles.modalInputView,
@@ -477,7 +564,7 @@ const AllActiveQ15 = ({navigation}) => {
           </TouchableOpacity>
         </Modal>
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

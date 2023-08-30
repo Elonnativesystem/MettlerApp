@@ -183,6 +183,7 @@ const Q15 = ({navigation, route}) => {
         {nextFourDates.reverse().map((date1, index) => (
           <TouchableOpacity
             key={index}
+            style={{borderWidth: 0}}
             activeOpacity={0.6}
             onPress={() => {
               setDate(date1);
@@ -393,13 +394,17 @@ const Q15 = ({navigation, route}) => {
                   </View>
                   <View style={[styles.modalInputView, {width: '45%'}]}>
                     <TextInput
-                     value={
-                      boxNo < 44
-                        ? `${q15Time.slice(0, 2)}${(parseInt(boxNo) + 15).toString().padStart(2, '0')}`
-                        : `${
-                            (parseInt(q15Time.slice(0, 2).padStart(2, '0')) + 1).toString().padStart(2, '0')
-                          }00`
-                    }
+                      value={
+                        boxNo < 44
+                          ? `${q15Time.slice(0, 2)}${(parseInt(boxNo) + 15)
+                              .toString()
+                              .padStart(2, '0')}`
+                          : `${(
+                              parseInt(q15Time.slice(0, 2).padStart(2, '0')) + 1
+                            )
+                              .toString()
+                              .padStart(2, '0')}00`
+                      }
                       // value={`${q15Time.slice(0, 2)}${parseInt(boxNo) + 15}`}
                       editable={false}
                       style={{color: '#000'}}

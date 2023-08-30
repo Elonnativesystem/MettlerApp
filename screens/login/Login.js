@@ -18,6 +18,7 @@ import {styles} from './styles';
 import {Button, Loader} from '../../components';
 import {Dropdown} from 'react-native-element-dropdown';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Login = ({navigation}) => {
   const {pending} = useSelector(state => state.user);
   const errorMsg = useSelector(state => state.user.error);
@@ -34,11 +35,13 @@ const Login = ({navigation}) => {
   }));
 
   const handleLogin = async () => {
+    await AsyncStorage.setItem('org', value);
     Login2(
       {username: uname, password: pwd, organization: value},
       dispatch,
       navigation,
     );
+    console.log(value);
   };
   useEffect(() => {
     {
@@ -52,8 +55,7 @@ const Login = ({navigation}) => {
       contentContainerStyle={[
         styles.mainContainer,
         darkMode && {backgroundColor: '#000'},
-      ]}
-      >
+      ]}>
       <Loader
         visible={pending}
         textContent="Loading"
@@ -62,24 +64,21 @@ const Login = ({navigation}) => {
       />
       <StatusBar barStyle={'light-content'} />
       <KeyboardAvoidingView style={styles.topContainer}>
-  <ImageBackground
-        source={require('../../assets/images/background.png')}
-        style={styles.topContainer}>
+        <ImageBackground
+          source={require('../../assets/images/background.png')}
+          style={styles.topContainer}>
           <KeyboardAvoidingView>
             <View style={styles.header}>
-          <Image
-            source={require('../../assets/images/logoHeader.png')}
-            resizeMode="contain"
-            style={styles.headerImage}
-          />
-        </View>
+              <Image
+                source={require('../../assets/images/logoHeader.png')}
+                resizeMode="contain"
+                style={styles.headerImage}
+              />
+            </View>
           </KeyboardAvoidingView>
-        
-      </ImageBackground>
-
-
+        </ImageBackground>
       </KeyboardAvoidingView>
-    
+
       <View
         style={[styles.loginContainer, darkMode && {backgroundColor: '#000'}]}>
         <Text style={[styles.helloText, darkMode && {color: '#fff'}]}>
@@ -97,7 +96,7 @@ const Login = ({navigation}) => {
 
           <MCIcon
             name="account-circle-outline"
-            size={30}
+            size={25}
             style={styles.inputIcon}
           />
           <TextInput
@@ -113,7 +112,7 @@ const Login = ({navigation}) => {
             resizeMode="contain"
             style={[styles.inputIcon, darkMode && {tintColor: '#fff'}]}
           /> */}
-          <MCIcon name="lock-outline" size={30} style={styles.inputIcon} />
+          <MCIcon name="lock-outline" size={25} style={styles.inputIcon} />
           <TextInput
             placeholder="Password"
             secureTextEntry={show}
@@ -130,7 +129,7 @@ const Login = ({navigation}) => {
               resizeMode="contain"
               style={[darkMode && {tintColor: '#fff'}]}
             /> */}
-            <MCIcon name={show ? 'eye-outline' : 'eye-off-outline'} size={30} />
+            <MCIcon name={show ? 'eye-outline' : 'eye-off-outline'} size={25} />
           </TouchableOpacity>
         </View>
 
@@ -142,7 +141,7 @@ const Login = ({navigation}) => {
           ]}>
           <Dropdown
             style={[styles.input, isFocus && {borderColor: 'blue'}]}
-            placeholderStyle={{marginLeft: '3%'}}
+            placeholderStyle={{marginLeft: '3%', fontSize: 20}}
             selectedTextStyle={{marginLeft: '3%'}}
             iconStyle={{marginRight: '-10%'}}
             data={data}
@@ -166,8 +165,8 @@ const Login = ({navigation}) => {
             renderLeftIcon={() => (
               <MCIcon
                 name="office-building-outline"
-                size={30}
-                style={styles.inputIcon}
+                size={25}
+                // style={styles.inputIcon}
               />
             )}
           />
