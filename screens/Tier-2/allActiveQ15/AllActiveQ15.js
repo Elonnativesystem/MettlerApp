@@ -184,7 +184,12 @@ const AllActiveQ15 = ({navigation}) => {
     calculateSlot(now);
     const interval = setInterval(() => {
       calculateSlot(new Date());
-     
+      calculateShift(date.getHours(), duration);
+      if (shift !== null) {
+        getAllTodayStaffs(dispatch, q15Date, shift);
+        calculateCurrentIndex();
+        console.log('getAllTodayStaffs invoked with shift:', shift);
+      }
     }, millisecondsUntilNextQuarterHour);
     return () => {
       clearInterval(interval);
