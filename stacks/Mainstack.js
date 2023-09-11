@@ -85,7 +85,7 @@ const Mainstack = () => {
   }, []);
   return (
     <>
-      {role === 'Staff' ? (
+      {/* {role === 'Staff' ? ( */}
         <Drawer.Navigator
           drawerContent={props => <CustomDrawer {...props} />}
           screenOptions={{
@@ -213,12 +213,12 @@ const Mainstack = () => {
             }}
           />
         </Drawer.Navigator>
-      ) : (
+      {/* ) : (
         <SafeAreaView>
           <Text>Stay Tuned.... Patient View is on Progress</Text>
           <Button label="Signout" active onPress={handleSignout} />
         </SafeAreaView>
-      )}
+      )} */}
     </>
   );
 };

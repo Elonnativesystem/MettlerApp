@@ -6,6 +6,7 @@ import {
   apiCallSuccess,
   getAllRegisteredNurseSuccess,
   getAllSocialWorkersSuccess,
+  getAllTodayShiftsSuccess,
   getAllTodayStaffsSuccess,
   getCompletedQ15Success,
   getIncompletedQ15Success,
@@ -14,6 +15,8 @@ import {
   getQ15LocationSuccess,
   getShiftDurationSuccess,
   getShiftStartTimesSuccess,
+  getTodayRNSuccess,
+  getVitalByPatientIdSuccess,
   loginSuccess,
   logoutSuccess,
   orgSuccess,
@@ -240,6 +243,24 @@ export const getAllPatients = async dispatch => {
     console.log(error.response);
   }
 };
+
+export const getVitalByPatientId = async (dispatch, pid) => {
+  dispatch(apiCallStart());
+  try {
+    const res = await axios.get(`${baseURL}/vital/getByPatientId/${pid}`);
+    console.log(res.data.data);
+    if (res.data.message.code === successCode) {
+      dispatch(getVitalByPatientIdSuccess(res.data.data));
+    } else {
+      dispatch(apiCallError(res.data.message.description));
+      console.log(pid);
+    }
+  } catch (error) {
+    dispatch(apiCallError(error.response.data.errorMessage));
+    console.log(error.response);
+  }
+};
+
 export const getQ15Location = async dispatch => {
   dispatch(apiCallStart());
   console.log('HEllo');
@@ -271,6 +292,8 @@ export const PostQ15Entry = async (
   stamp,
   slot,
   username,
+  breathCheck,
+  text,
   dispatch,
 ) => {
   dispatch(apiCallStart());
@@ -279,6 +302,8 @@ export const PostQ15Entry = async (
     const res = await axios.post(`${baseURL}/config/register`, {
       pid,
       q15Date,
+      breathing: breathCheck,
+      remarks: text,
       q15Time: stamp,
       q15Slot: slot,
       location: value,
@@ -372,7 +397,7 @@ export const getAllRegisterNurse = async dispatch => {
       `${baseURL}/staff/role/Registered Nurses/${org}`,
     );
     dispatch(getAllRegisteredNurseSuccess(res.data.data));
-    console.log(res.data);
+    // console.log(res.data);
   } catch (error) {
     console.log(error);
     dispatch(apiCallError(error.response.data.errorMessage));
@@ -397,6 +422,7 @@ export const postQ15PSConfig = async (dispatch, data) => {
     const res = await axios.post(`${baseURL}/PSConfig/register`, data);
     if (res.data.message.code === successCode) {
       Alert.alert('Mettler Health Care', 'Staffs Allocated Successfully');
+      dispatch(apiCallSuccess());
     }
     console.log(res.data);
   } catch (error) {
@@ -407,15 +433,31 @@ export const postQ15PSConfig = async (dispatch, data) => {
 
 export const getAllTodayStaffs = async (dispatch, q15Date, shift) => {
   dispatch(apiCallStart());
-  console.log(q15Date, shift);
+  // console.log(q15Date, shift);
   try {
     const res = await axios.get(`${baseURL}/PSConfig/getByDate/${q15Date}`);
-    if (res.data.data && res.data.data.length > 0) {
-      dispatch(
-        getAllTodayStaffsSuccess(res.data.data[0].shift[shift]?.schedule),
-      );
-      console.log(res.data.data[0].shift[shift]?.schedule[0]);
-      console.log(shift);
+    if (res.data.data) {
+      dispatch(getAllTodayStaffsSuccess(res.data.data.shift[shift]?.schedule));
+      dispatch(getTodayRNSuccess(res.data.data.shift[shift].rnIncharge));
+      // console.log(res.data.data[0].shift[shift]?.schedule[0]);
+      // console.log(shift);
+    }
+  } catch (error) {
+    console.log(error);
+    dispatch(apiCallError(error.response.data.errorMessage));
+  }
+};
+
+export const getAllTodayShifts = async (dispatch, RDate) => {
+  dispatch(apiCallStart());
+  try {
+    const res = await axios.get(`${baseURL}/PSConfig/getByDate/${RDate}`);
+    if (res.data.data) {
+      dispatch(getAllTodayShiftsSuccess(res.data.data.shift));
+      console.log('SUCEESSSSS', res.data.data.shift[0].rnIncharge);
+    }
+    if (res.data.message.code === 'MHC - 0093') {
+      dispatch(getAllTodayShiftsSuccess([]));
     }
   } catch (error) {
     console.log(error);

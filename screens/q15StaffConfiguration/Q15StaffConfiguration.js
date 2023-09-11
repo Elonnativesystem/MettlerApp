@@ -5,13 +5,14 @@ import {CalendarDate, ShiftTabs} from '../../components';
 import DatePicker from 'react-native-date-picker';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ShiftComponent from './ShiftComponent';
-import {getShiftTimes} from '../../redux/apiCalls';
+import {getAllTodayShifts, getShiftTimes} from '../../redux/apiCalls';
 import {useDispatch, useSelector} from 'react-redux';
 
 const Q15StaffConfiguration = () => {
   const dispatch = useDispatch();
   // const [duration, setDuration] = useState(null);
   // const [startTime, setStartTime] = useState(null);
+  const AllShiftStaffs = useSelector(state => state.user.allShiftStaffs);
   const startTime = useSelector(state => state.user.startTime);
   const duration = useSelector(state => state.user.duration);
   const [date, setDate] = useState(new Date());
@@ -40,7 +41,11 @@ const Q15StaffConfiguration = () => {
 
   useEffect(() => {
     getShiftTimes(dispatch);
-  }, []);
+    getAllTodayShifts(dispatch, RDate);
+  }, [RDate]);
+  // useEffect(() => {
+  //   getAllTodayShifts(dispatch, RDate);
+  // }, [RDate]);
   // const getDurationAndStartTime = async () => {
   //   try {
   //     const storedDuration = await AsyncStorage.getItem('shiftDuration');
@@ -129,6 +134,8 @@ const Q15StaffConfiguration = () => {
             endTime={endTime}
             date={RDate}
             shiftName="Shift-A"
+            RNData={AllShiftStaffs[0]?.rnIncharge}
+            SWData={AllShiftStaffs[0]?.schedule}
           />
         )}
         SecondRoute={() => (
@@ -137,6 +144,8 @@ const Q15StaffConfiguration = () => {
             endTime={endTime1}
             date={RDate}
             shiftName="Shift-B"
+            RNData={AllShiftStaffs[1]?.rnIncharge}
+            SWData={AllShiftStaffs[1]?.schedule}
           />
         )}
         ThirdRoute={() => (
@@ -145,6 +154,8 @@ const Q15StaffConfiguration = () => {
             endTime={startTime}
             date={RDate}
             shiftName="Shift-C"
+            RNData={AllShiftStaffs[2]?.rnIncharge}
+            SWData={AllShiftStaffs[2]?.schedule}
           />
         )}
       />

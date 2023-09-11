@@ -11,6 +11,7 @@ const userSlice = createSlice({
     },
     organization: [],
     allPatients: [],
+    patientVitals: {},
     q15Location: [],
     q15Activity: [],
     q15Config: [],
@@ -19,6 +20,8 @@ const userSlice = createSlice({
     registeredNurse: [],
     socialWorkers: [],
     todayStaffs: [],
+    allShiftStaffs: [],
+    todayRN: null,
     startTime: null,
     duration: null,
     q15Load: false,
@@ -85,6 +88,10 @@ const userSlice = createSlice({
       state.pending = false;
       state.allPatients = action.payload;
     },
+    getVitalByPatientIdSuccess: (state, action) => {
+      state.pending = false;
+      state.patientVitals = action.payload;
+    },
     getQ15LocationSuccess: (state, action) => {
       state.pending = false;
       state.q15Location = action.payload;
@@ -129,6 +136,14 @@ const userSlice = createSlice({
       state.pending = false;
       state.todayStaffs = action.payload;
     },
+    getAllTodayShiftsSuccess: (state, action) => {
+      state.pending = false;
+      state.allShiftStaffs = action.payload;
+    },
+    getTodayRNSuccess: (state, action) => {
+      state.pending = false;
+      state.todayRN = action.payload;
+    },
   },
 });
 
@@ -141,6 +156,7 @@ export const {
   getAllRegisteredNurseSuccess,
   getAllSocialWorkersSuccess,
   getAllTodayStaffsSuccess,
+  getAllTodayShiftsSuccess,
   getQ15ActivitySuccess,
   getCompletedQ15Success,
   getIncompletedQ15Success,
@@ -148,6 +164,8 @@ export const {
   getShiftDurationSuccess,
   getQ15ConfigSuccess,
   getQ15LocationSuccess,
+  getTodayRNSuccess,
+  getVitalByPatientIdSuccess,
   loginSuccess,
   logoutSuccess,
   orgSuccess,

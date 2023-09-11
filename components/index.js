@@ -7,6 +7,7 @@ import Loader from './loader/Loader';
 import MyModal from './modal/Modal';
 import OtpBox from './otpBox/OtpBox';
 import Button from './primaryButton/Button';
+import PSAssignTabs from './psAssignTabs/PSAssignTabs';
 import Q15Row from './q15Row/Q15Row';
 import ScheduleBtn from './scheduleBtn/ScheduleBtn';
 import ShiftTabs from './shiftTabs/ShiftTabs';
@@ -24,6 +25,7 @@ export {
   Loader,
   MyModal,
   OtpBox,
+  PSAssignTabs,
   Q15Row,
   ScheduleBtn,
   ShiftTabs,

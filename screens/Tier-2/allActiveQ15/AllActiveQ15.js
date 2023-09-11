@@ -63,6 +63,7 @@ const AllActiveQ15 = ({navigation}) => {
   const completedData = useSelector(state => state.user.q15Completed);
   const incompletedData = useSelector(state => state.user.q15Incompleted);
   const todayStaffsData = useSelector(state => state.user.todayStaffs);
+  const TodayRN = useSelector(state => state.user.todayRN);
   const duration = useSelector(state => state.user.duration);
   const [shift, setShift] = useState(null);
   function calculateShift(hour, duration) {
@@ -203,7 +204,7 @@ const AllActiveQ15 = ({navigation}) => {
   }, [slot, q15Date, complete]);
   const handlePatientPress = async (id, name) => {
     try {
-      if (isStaffIDPresent) {
+      if (isStaffIDPresent || isMyIDPresent) {
         setOk(true);
         calculateSlot(time);
         setPid(id);
@@ -234,6 +235,8 @@ const AllActiveQ15 = ({navigation}) => {
           stamp,
           slot,
           username,
+          breathCheck,
+          text,
           dispatch,
         );
         setValue('');
@@ -275,6 +278,8 @@ const AllActiveQ15 = ({navigation}) => {
     todayStaffsData[currentIndex] &&
     (todayStaffsData[currentIndex].staff1 === staffID ||
       todayStaffsData[currentIndex].staff2 === staffID);
+
+  const isMyIDPresent = staffID === TodayRN;
   return (
     <View style={styles.container}>
       <Loader

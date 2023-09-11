@@ -6,15 +6,22 @@ import {
   TouchableOpacity,
   Pressable,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {styles} from './styles';
 import {VitalBtnHorizontal, VitalBtnVertical} from '../../../components';
 import PatientDetails2 from './PatientDetails2';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
+import {getVitalByPatientId} from '../../../redux/apiCalls';
+import {useDispatch, useSelector} from 'react-redux';
 
 const PatientDetails = ({navigation, route}) => {
   const {patient} = route.params;
+  const dispatch = useDispatch();
+  const VitalsData = useSelector(state => state.user.patientVitals);
+  useEffect(() => {
+    getVitalByPatientId(dispatch, patient.id);
+  }, []);
   return (
     <>
       <View style={styles.header}>
@@ -48,7 +55,10 @@ const PatientDetails = ({navigation, route}) => {
               icon="human-male-height"
               size={30}
               title="Height"
-              value="171.5(cm)"
+              value={
+                VitalsData.length > 0 &&
+                `${VitalsData?.height.value} (${VitalsData?.height.unit})`
+              }
             />
             <VitalBtnHorizontal
               icon="blood-bag"
@@ -60,7 +70,10 @@ const PatientDetails = ({navigation, route}) => {
               icon="weight-kilogram"
               size={30}
               title="Weight"
-              value="58(kg)"
+              value={
+                VitalsData.length > 0 &&
+                `${VitalsData?.weight.value} (${VitalsData?.weight.unit})`
+              }
             />
             <VitalBtnHorizontal
               icon="calendar-multiselect"
@@ -72,7 +85,10 @@ const PatientDetails = ({navigation, route}) => {
               icon="note-edit-outline"
               title="Gulucose"
               size={30}
-              value="50 mg/dl"
+              value={
+                VitalsData.length > 0 &&
+                `${VitalsData?.bloodGlucoseLevel.value} (${VitalsData?.bloodGlucoseLevel.unit})`
+              }
             />
           </View>
         </View>
@@ -81,7 +97,7 @@ const PatientDetails = ({navigation, route}) => {
             icon="temperature-celsius"
             size={30}
             header="Temp"
-            data="97.7°C"
+            data={VitalsData.length > 0 && VitalsData?.bodyTemperature.value}
             bg1="#E1E3FF"
             bg2="#B3B6E0"
           />
@@ -89,7 +105,10 @@ const PatientDetails = ({navigation, route}) => {
             icon="blood-bag"
             size={30}
             header="BP"
-            data="120/190"
+            data={
+              VitalsData.length > 0 &&
+              `${VitalsData?.bloodPressure.systolicValue}/${VitalsData?.bloodPressure.diastolicValue} ${VitalsData?.bloodPressure.unit}`
+            }
             bg1="#D8F1D8"
             bg2="#A7DBA7"
           />
@@ -97,7 +116,10 @@ const PatientDetails = ({navigation, route}) => {
             icon="battery-heart-outline"
             size={30}
             header="Heart Rate"
-            data="110 bpm"
+            data={
+              VitalsData.length > 0 &&
+              `${VitalsData?.heartRate.value} ${VitalsData?.heartRate.unit}`
+            }
             bg1="#FAE8DF"
             bg2="#F1C0A7"
           />

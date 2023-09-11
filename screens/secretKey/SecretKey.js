@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Toast from 'react-native-simple-toast';
-import {SecretKeyVerify} from '../../redux/apiCalls';
+import {Logout, SecretKeyVerify} from '../../redux/apiCalls';
 import {useDispatch, useSelector} from 'react-redux';
 import {styles} from './styles';
 import {Loader, OtpBox} from '../../components';
@@ -18,11 +18,29 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const SecretKey = ({navigation}) => {
   const [enteredOtp, setEnteredOtp] = useState('');
   const {pending} = useSelector(state => state.user);
+  const retrive = useSelector(state => state.user.retrive);
   const errorMsg = useSelector(state => state.user.error);
   const dispatch = useDispatch();
   const handleSecretKey = async () => {
     const jwt = await AsyncStorage.getItem('jwt');
     SecretKeyVerify({secretKey: enteredOtp, jwt}, dispatch);
+  };
+  const handleSignout = async () => {
+    const jwt = await AsyncStorage.getItem('jwt');
+    const username = await AsyncStorage.getItem('username');
+    Alert.alert('MettlerHealthCare', 'Are You sure to Sign out ?', [
+      {
+        text: 'OK',
+        style: 'destructive',
+        onPress: () => {
+          Logout({username, jwt}, dispatch, navigation);
+        },
+      },
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+    ]);
   };
   useEffect(() => {
     {
@@ -68,9 +86,20 @@ const SecretKey = ({navigation}) => {
           onPress={handleSecretKey}>
           <Text style={styles.btnText}>Login</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btnLink} onPress={handleForgetNavigate}>
+        {retrive ? (
+          <TouchableOpacity style={styles.btnLink} onPress={handleSignout}>
+            <Text style={styles.btnLinkText}>Logout </Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            style={styles.btnLink}
+            onPress={handleForgetNavigate}>
+            <Text style={styles.btnLinkText}>Forgot Passcode?</Text>
+          </TouchableOpacity>
+        )}
+        {/* <TouchableOpacity style={styles.btnLink} onPress={handleForgetNavigate}>
           <Text style={styles.btnLinkText}>Forgot Passcode?</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </SafeAreaView>
   );

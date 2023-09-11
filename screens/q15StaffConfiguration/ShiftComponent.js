@@ -17,9 +17,16 @@ import {
   getAllSocialWorkers,
   postQ15PSConfig,
 } from '../../redux/apiCalls';
-import {Button} from '../../components';
+import {Button, CheckBox} from '../../components';
 
-const ShiftComponent = ({startTime, endTime, date, shiftName}) => {
+const ShiftComponent = ({
+  startTime,
+  endTime,
+  date,
+  shiftName,
+  RNData,
+  SWData,
+}) => {
   const [RNIncharge, setRNIncharge] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const [checkStates, setCheckStates] = useState(
@@ -37,23 +44,28 @@ const ShiftComponent = ({startTime, endTime, date, shiftName}) => {
 
   const hoursInDay = 24; // Total hours in a day
   const startHour = parseInt(startTime?.slice(0, 2));
-  
+
   // Calculate endTime1 with wrapping
   const endTime1 =
     ((startHour + 2) % hoursInDay).toString().padStart(2, '0') + ':00';
-  
+
   // Calculate endTime2 with wrapping
   const endTime2 =
-    ((parseInt(endTime1.slice(0, 2)) + 2) % hoursInDay).toString().padStart(2, '0') + ':00';
-  
+    ((parseInt(endTime1.slice(0, 2)) + 2) % hoursInDay)
+      .toString()
+      .padStart(2, '0') + ':00';
+
   // Calculate endTime3 with wrapping
   const endTime3 =
-    ((parseInt(endTime2.slice(0, 2)) + 2) % hoursInDay).toString().padStart(2, '0') + ':00';
-  
+    ((parseInt(endTime2.slice(0, 2)) + 2) % hoursInDay)
+      .toString()
+      .padStart(2, '0') + ':00';
+
   // Calculate endTime4 with wrapping
   const endTime4 =
-    ((parseInt(endTime3.slice(0, 2)) + 2) % hoursInDay).toString().padStart(2, '0') + ':00';
-  
+    ((parseInt(endTime3.slice(0, 2)) + 2) % hoursInDay)
+      .toString()
+      .padStart(2, '0') + ':00';
 
   const StaffData = [
     {id: 0, value: `${startTime}-${endTime1}`},
@@ -94,11 +106,20 @@ const ShiftComponent = ({startTime, endTime, date, shiftName}) => {
   useEffect(() => {
     getAllRegisterNurse(dispatch);
     getAllSocialWorkers(dispatch);
-  }, []);
+    RNData && setRNIncharge(RNData);
+    console.log(RNData);
+  }, [RNData, SWData]);
 
   useEffect(() => {
-    console.log(selectedDropdownValues[0]);
-  }, [selectedDropdownValues]);
+    if (SWData) {
+      const newSelectedValues = SWData.map(item => item.staff1);
+      setSelectedDropdownValues(newSelectedValues);
+    }
+  }, [SWData]);
+
+  // useEffect(() => {
+  //   console.log(selectedDropdownValues[0]);
+  // }, [selectedDropdownValues]);
 
   const renderDropdown = (item, index) => {
     const isDisabled = index > 0 && !selectedDropdownValues[index - 1];
@@ -160,11 +181,11 @@ const ShiftComponent = ({startTime, endTime, date, shiftName}) => {
       <View style={styles.halfInputs}>
         <View style={[styles.inputView, {width: '42%'}]}>
           <TextInput style={styles.input} value={startTime} editable={false} />
-          <MCIcon name="clock-edit-outline" size={30} color="#8d8d8d" />
+          <MCIcon name="clock-edit-outline" size={25} color="#8d8d8d" />
         </View>
         <View style={[styles.inputView, {width: '42%'}]}>
           <TextInput style={styles.input} value={endTime} editable={false} />
-          <MCIcon name="clock-edit-outline" size={30} color="#8d8d8d" />
+          <MCIcon name="clock-edit-outline" size={25} color="#8d8d8d" />
         </View>
       </View>
       <View style={styles.dropDownView}>
@@ -193,21 +214,40 @@ const ShiftComponent = ({startTime, endTime, date, shiftName}) => {
           renderItem={({item, index}) => (
             <View style={styles.flatList}>
               <View style={styles.flatListContainer}>
-                <View
+                {/* <View
                   style={{
                     borderWidth: 0.5,
-                    padding: 5,
-                    height: 50,
+                    padding: 10,
+                    height: 30,
                     marginTop: '6%',
                     borderColor: '#8d8d8d',
                     justifyContent: 'center',
-                  }}>
-                  <TextInput value={item.value} editable={false} />
+                  }}> */}
+                <View style={{marginTop: '7%'}}>
+                  <TextInput
+                    value={item.value}
+                    editable={false}
+                    style={{
+                      color: '#0f3995',
+                      borderWidth: 0.4,
+                      padding: 5, // Adjust this value to control horizontal padding
+                      paddingVertical: 2, // Adjust this value to control vertical padding
+                      width: '100%', // Adjust the width as needed
+                    }}
+                  />
                 </View>
+                {/* </View> */}
                 {renderDropdown(item, index)}
               </View>
               <View style={styles.partialRoomView}>
-                <TouchableOpacity
+                <CheckBox
+                  checked={checkStates[index]}
+                  label="Partial Rooms?"
+                  onPress={() => {
+                    handleCheckChange(index);
+                  }}
+                />
+                {/* <TouchableOpacity
                   onPress={() => {
                     handleCheckChange(index);
                   }}
@@ -218,7 +258,7 @@ const ShiftComponent = ({startTime, endTime, date, shiftName}) => {
                   activeOpacity={0.8}>
                   <MCIcon name="check-bold" color="#FFF" size={20} />
                 </TouchableOpacity>
-                <Text>Partial Room</Text>
+                <Text>Partial Room</Text> */}
               </View>
               {checkStates[index] && (
                 <View style={[styles.halfInputs]}>

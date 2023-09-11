@@ -27,14 +27,27 @@ export const styles = StyleSheet.create({
   },
   inputView: {
     borderWidth: 1,
-    padding: 2,
+    padding: 0,
     borderRadius: 5,
     borderColor: '#8d8d8d',
     justifyContent: 'space-between',
+    alignItems:"center",
     flexDirection: 'row',
   },
   input: {
     fontSize: 20,
+  },
+  textInputContainer: {
+    flexDirection: 'row', // Adjust the flexDirection as needed
+    alignItems: 'center', // Adjust the alignItems as needed
+    borderWidth: 0.4,
+    borderColor: '#8d8d8d',
+    padding: 5,
+    width: '30%', // Adjust the width as needed
+  },
+  textInput: {
+    color: '#0f3995',
+    width: '100%', // Adjust the width as needed
   },
   dropDownView: {
     alignItems: 'center',
@@ -42,7 +55,7 @@ export const styles = StyleSheet.create({
   },
   dropDown: {
     borderWidth: 0.7,
-    padding: 10,
+    padding: 3,
     borderRadius: 5,
     borderColor: '#8d8d8d',
     width: '91%',
