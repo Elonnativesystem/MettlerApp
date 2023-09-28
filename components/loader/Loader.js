@@ -1,5 +1,6 @@
 import React, {useRef, useEffect} from 'react';
 import {Image} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 const Loader = props => {
@@ -7,8 +8,8 @@ const Loader = props => {
     <Spinner
       {...props}
       customIndicator={
-        <Image
-          source={require('../../assets/Vp3L.gif')}
+        <FastImage
+          source={require('../../assets/loading.gif')}
           style={{width: 50, height: 50}}
         />
       }

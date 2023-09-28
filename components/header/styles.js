@@ -15,6 +15,7 @@ export const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'space-between',
     alignItems: 'center',
+    height: 100,
   },
   menuBtn: {
     justifyContent: 'center',
@@ -29,10 +30,13 @@ export const styles = StyleSheet.create({
     marginHorizontal: 27,
   },
   profileBtn: {
-    width: '100%',
-    marginLeft: 25,
+    // width: '100%',
+    // marginLeft: 45,
   },
   profileImage: {
-    width: '10%',
+    // width: '10%',
+    height: '50%',
+
+
   },
 });

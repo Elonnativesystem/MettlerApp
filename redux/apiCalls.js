@@ -8,6 +8,7 @@ import {
   getAllSocialWorkersSuccess,
   getAllTodayShiftsSuccess,
   getAllTodayStaffsSuccess,
+  getAllergyByPatientSuccess,
   getCompletedQ15Success,
   getIncompletedQ15Success,
   getQ15ActivitySuccess,
@@ -28,8 +29,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {BASE_URL} from '@env';
 import {Alert} from 'react-native';
 
-const baseURL = BASE_URL;
-// 'http://web.mettlerhealth.com:7000/api';
+// const baseURL = BASE_URL;
+const baseURL = 'http://web.mettlerhealth.com:7000/api';
 const successCode = 'MHC - 0200';
 
 export const GetOrganization = async dispatch => {
@@ -38,7 +39,7 @@ export const GetOrganization = async dispatch => {
   // console.log(baseURL);
   try {
     const res = await axios.get(`${baseURL}/org/name`);
-    // console.log(res.data);
+    console.log(res.data);
     // await AsyncStorage.setItem('organization', res.data);
     await dispatch(orgSuccess(res.data.data));
   } catch (error) {
@@ -127,7 +128,7 @@ export const Logout = async (userInfo, dispatch, navigation) => {
 
 export const RetriveLogin = async dispatch => {
   const jwt = await AsyncStorage.getItem('jwt');
-
+  console.log('Hel');
   dispatch(apiCallStart());
 
   try {
@@ -136,17 +137,19 @@ export const RetriveLogin = async dispatch => {
         Authorization: `Bearer ${jwt}`,
       },
     });
-    // console.log(res.data.message);
+    console.log(res.data.message);
     if (res.data.message.code === successCode) {
       dispatch(retriveLoginSuccess());
       // console.log('hii');
       await AsyncStorage.setItem('retrive', 'true');
     } else {
       dispatch(apiCallError());
-      // console.log(res.data.message);
+      console.log(res.data.message);
     }
   } catch (error) {
     dispatch(apiCallError());
+    console.log(baseURL);
+    console.log(error);
   }
 };
 
@@ -440,7 +443,7 @@ export const getAllTodayStaffs = async (dispatch, q15Date, shift) => {
       dispatch(getTodayRNSuccess(res.data.data.shift[shift].rnIncharge));
       // console.log(res.data.data[0].shift[shift]?.schedule[0]);
       // console.log(shift);
-      console.log("hello");
+      console.log('hello');
     }
   } catch (error) {
     console.log(error);
@@ -458,6 +461,31 @@ export const getAllTodayShifts = async (dispatch, RDate) => {
     }
     if (res.data.message.code === 'MHC - 0093') {
       dispatch(getAllTodayShiftsSuccess([]));
+    }
+  } catch (error) {
+    console.log(error);
+    dispatch(apiCallError(error.response.data.errorMessage));
+  }
+};
+
+export const getAllergyByPatient = async (dispatch, pid) => {
+  dispatch(apiCallStart());
+  try {
+    const res = await axios.get(`${baseURL}/Allergy/getByPatientId/${pid}`);
+    // console.log(res.data.data);
+    dispatch(getAllergyByPatientSuccess(res.data.data));
+  } catch (error) {
+    console.log(error);
+    dispatch(apiCallError(error.response.data.errorMessage));
+  }
+};
+
+export const postAllergy = async dispatch => {
+  dispatch(apiCallStart());
+  try {
+    const res = await axios.post(`${baseURL}/Allergy/register`);
+    if (res.data.message.code === successCode) {
+      alert('Hey');
     }
   } catch (error) {
     console.log(error);

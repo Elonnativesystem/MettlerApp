@@ -15,7 +15,13 @@ import {
   getQ15Location,
 } from '../../../redux/apiCalls';
 import {useDispatch, useSelector} from 'react-redux';
-import {Button, CalendarDate, Q15Row, Tabs} from '../../../components';
+import {
+  Button,
+  CalendarDate,
+  PatientHeader,
+  Q15Row,
+  Tabs,
+} from '../../../components';
 import {Dropdown} from 'react-native-element-dropdown';
 import DatePicker from 'react-native-date-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -148,7 +154,7 @@ const Q15 = ({navigation, route}) => {
   const nextFourDates = generateNextFourDates();
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+      {/* <View style={styles.header}>
         <Pressable
           style={{flexDirection: 'row'}}
           onPress={() => {
@@ -165,7 +171,14 @@ const Q15 = ({navigation, route}) => {
           <Text style={styles.pName}>{patient.username}</Text>
           <Text style={{color: '#fff'}}>24 Yrs </Text>
         </View>
-      </View>
+      </View> */}
+      <PatientHeader
+        onBack={() => {
+          navigation.goBack();
+        }}
+        patientAge="24 Yrs"
+        patientName={patient.username}
+      />
       <View style={styles.calendarHeader}>
         {nextFourDates.reverse().map((date1, index) => (
           <TouchableOpacity

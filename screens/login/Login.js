@@ -10,12 +10,16 @@ import {
   KeyboardAvoidingView,
   ScrollView,
 } from 'react-native';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import Toast from 'react-native-simple-toast';
 import {GetOrganization, Login2} from '../../redux/apiCalls';
 import {styles} from './styles';
-import {Button, Loader} from '../../components';
+import {Button, CheckBox, Loader} from '../../components';
 import {Dropdown} from 'react-native-element-dropdown';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -29,6 +33,7 @@ const Login = ({navigation}) => {
   const [value, setValue] = useState('');
   const [isFocus, setIsFocus] = useState(false);
   const [show, setShow] = useState(true);
+  const [remember, setRemember] = useState(false);
   const data = OrgData.map(item => ({
     label: item.name,
     value: item.id,
@@ -52,6 +57,7 @@ const Login = ({navigation}) => {
   const darkMode = useColorScheme() === 'dark';
   return (
     <ScrollView
+      showsVerticalScrollIndicator={false}
       contentContainerStyle={[
         styles.mainContainer,
         darkMode && {backgroundColor: '#000'},
@@ -62,11 +68,18 @@ const Login = ({navigation}) => {
         color="#0f3995"
         textStyle={{color: '#0f3995'}}
       />
-      <StatusBar barStyle={'light-content'} backgroundColor="#0f3995" />
+      <StatusBar
+        barStyle={'light-content'}
+        backgroundColor="transparent"
+        translucent={true}
+      />
       <KeyboardAvoidingView style={styles.topContainer}>
         <ImageBackground
           source={require('../../assets/images/background.png')}
-          style={styles.topContainer}>
+          style={[
+            styles.topContainer,
+            {paddingTop: StatusBar.currentHeight}, // Add paddingTop to cover StatusBar
+          ]}>
           <KeyboardAvoidingView>
             <View style={styles.header}>
               <Image
@@ -96,7 +109,7 @@ const Login = ({navigation}) => {
 
           <MCIcon
             name="account-circle-outline"
-            size={25}
+            size={hp(4)}
             style={styles.inputIcon}
           />
           <TextInput
@@ -112,7 +125,7 @@ const Login = ({navigation}) => {
             resizeMode="contain"
             style={[styles.inputIcon, darkMode && {tintColor: '#fff'}]}
           /> */}
-          <MCIcon name="lock-outline" size={25} style={styles.inputIcon} />
+          <MCIcon name="lock-outline" size={hp(4)} style={styles.inputIcon} />
           <TextInput
             placeholder="Password"
             secureTextEntry={show}
@@ -129,7 +142,10 @@ const Login = ({navigation}) => {
               resizeMode="contain"
               style={[darkMode && {tintColor: '#fff'}]}
             /> */}
-            <MCIcon name={show ? 'eye-outline' : 'eye-off-outline'} size={25} />
+            <MCIcon
+              name={show ? 'eye-outline' : 'eye-off-outline'}
+              size={hp(4)}
+            />
           </TouchableOpacity>
         </View>
 
@@ -141,7 +157,11 @@ const Login = ({navigation}) => {
           ]}>
           <Dropdown
             style={[styles.input, {padding: 3}]}
-            placeholderStyle={{marginLeft: '3%', fontSize: 20}}
+            placeholderStyle={{
+              marginLeft: wp(2),
+              fontSize: hp(2.5),
+              color: '#8d8d8d',
+            }}
             selectedTextStyle={{marginLeft: '3%'}}
             iconStyle={{marginRight: '-10%'}}
             data={data}
@@ -165,17 +185,27 @@ const Login = ({navigation}) => {
             renderLeftIcon={() => (
               <MCIcon
                 name="office-building-outline"
-                size={25}
+                size={hp(4)}
                 // style={styles.inputIcon}
               />
             )}
           />
         </View>
         <View style={styles.subLoginContainer}>
-          <Text style={darkMode && {color: '#fff'}}>Remember Me</Text>
+          {/* <Text style={darkMode && {color: '#fff'}}>Remember Me</Text> */}
+          <CheckBox
+            label="Remember Me"
+            checked={remember}
+            onPress={() => {
+              setRemember(!remember);
+            }}
+          />
           <TouchableOpacity
+            style={{marginVertical: '2%'}}
             onPress={() => navigation.navigate('ForgotPassword')}>
-            <Text style={darkMode && {color: '#fff'}}>Forgot Password?</Text>
+            <Text style={[{fontSize: hp(2)}, darkMode && {color: '#fff'}]}>
+              Forgot Password?
+            </Text>
           </TouchableOpacity>
         </View>
         <TouchableOpacity

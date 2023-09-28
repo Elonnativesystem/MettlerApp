@@ -1,6 +1,5 @@
 import {
   View,
-  Text,
   TextInput,
   FlatList,
   TouchableOpacity,
@@ -290,7 +289,9 @@ const ShiftComponent = ({
                     borderRadius: 5,
                     padding: 5, // Adjust this value to control horizontal padding
                     paddingVertical: 13, // Adjust this value to control vertical padding
-                    width: '100%', // Adjust the width as needed
+                    width: '60%', // Adjust the width as needed
+                    maxHeight: 50,
+                    textAlign: 'center',
                   }}
                 />
               </View>
@@ -312,6 +313,7 @@ const ShiftComponent = ({
                   width: '140%',
                   alignItems: 'center',
                   marginTop: '-5%',
+                  marginRight: '12%',
                 }}>
                 {/* <View
                     style={[

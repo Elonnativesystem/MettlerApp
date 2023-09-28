@@ -34,6 +34,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',
+    maxHeight: 50,
   },
   input: {
     fontSize: 20,
@@ -54,6 +55,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: '5%',
     backgroundColor: '#FFF',
+    maxHeight: 50,
   },
   dropDown: {
     borderWidth: 0.7,
@@ -62,6 +64,7 @@ export const styles = StyleSheet.create({
     borderColor: '#8d8d8d',
     backgroundColor: '#FFF',
     width: '91%',
+    maxHeight: 50,
   },
   flatList: {
     alignItems: 'center',
@@ -83,7 +86,7 @@ export const styles = StyleSheet.create({
     // justifyContent: 'flex-start',
     flexDirection: 'row',
     gap: 10,
-    marginLeft: -160,
+    marginLeft: -220,
     marginTop: '1%',
   },
   checkBox: {

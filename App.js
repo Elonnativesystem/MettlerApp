@@ -6,12 +6,23 @@ import Authstack from './stacks/Authstack';
 import Mainstack from './stacks/Mainstack';
 import {RetriveLogin} from './redux/apiCalls';
 import {SecretKey} from './screens';
+import {Platform} from 'react-native';
+import SplashScreen from 'react-native-splash-screen';
 const App = () => {
   const mainStack = useSelector(state => state.user.mainStack);
   const retrive = useSelector(state => state.user.retrive);
   const dispatch = useDispatch();
   useEffect(() => {
     RetriveLogin(dispatch);
+  }, []);
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      const splashTimeout = setTimeout(() => {
+        // Hide the splash screen
+        SplashScreen.hide();
+      }, 1500); // 3000 milliseconds (3 seconds)
+      return () => clearTimeout(splashTimeout);
+    }
   }, []);
   return (
     <NavigationContainer>

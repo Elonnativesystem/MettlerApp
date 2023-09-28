@@ -59,7 +59,7 @@ const SecretKey = ({navigation}) => {
     }
   };
   return (
-    <SafeAreaView style={{backgroundColor: '#fff', flex: 1}}>
+    <SafeAreaView style={{backgroundColor: '#fff', flex: 1, marginTop: '5%'}}>
       <StatusBar barStyle={'dark-content'} backgroundColor={'#fff'} />
       <Loader
         visible={pending}

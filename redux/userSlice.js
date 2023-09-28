@@ -21,6 +21,7 @@ const userSlice = createSlice({
     socialWorkers: [],
     todayStaffs: [],
     allShiftStaffs: [],
+    allergyData: [],
     todayRN: null,
     startTime: null,
     duration: null,
@@ -75,10 +76,10 @@ const userSlice = createSlice({
       state.mainStack = false;
       state.organization = [];
       state.allPatients = [];
-      state.allShiftStaffs=[];
+      state.allShiftStaffs = [];
       state.duration = null;
-      state.error=null;
-      state.patientVitals=[];
+      state.error = null;
+      state.patientVitals = [];
     },
     retriveLoginSuccess: state => {
       state.pending = false;
@@ -148,6 +149,10 @@ const userSlice = createSlice({
       state.pending = false;
       state.todayRN = action.payload;
     },
+    getAllergyByPatientSuccess: (state, action) => {
+      state.pending = false;
+      state.allergyData = action.payload;
+    },
   },
 });
 
@@ -177,5 +182,6 @@ export const {
   retriveLoginSuccess,
   selectedOrg,
   sKeyVerifySuccess,
+  getAllergyByPatientSuccess,
 } = userSlice.actions;
 export default userSlice.reducer;

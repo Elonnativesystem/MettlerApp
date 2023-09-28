@@ -14,7 +14,7 @@ const Button = ({onPress, label, active, cancel, half, disabled}) => {
       activeOpacity={0.7}
       disabled={disabled}
       onPress={onPress}>
-      <Text style={[styles.btnText, cancel && {color: '#293241 '}]}>{label}</Text>
+      <Text style={[styles.btnText, cancel && {color: '#293241'}]}>{label}</Text>
     </TouchableOpacity>
   );
 };

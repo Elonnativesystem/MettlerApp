@@ -22,11 +22,23 @@ import Q15 from './Tier-3/q-15/Q15';
 import Profile from './profile/Profile';
 import AllActiveQ15 from './Tier-2/allActiveQ15/AllActiveQ15';
 import Q15StaffConfiguration from './q15StaffConfiguration/Q15StaffConfiguration';
-
+import AdmitPatient from './Tier-4/admitPatient/AdmitPatient';
+import OverView from './Tier-4/overview/OverView';
+import PatientData from './Tier-4/patientData/PatientData';
+import Reports from './Tier-4/reports/Reports';
+import TreatmentPlan from './Tier-4/treatmentPlan/TreatmentPlan';
+import Allergy from './Tier-5/allergy/Allergy';
+import PatientProblem from './Tier-5/patientProblem/PatientProblem';
+import PatientVitals from './Tier-5/patientVitals/PatientVitals';
+import Immunization from './Tier-5/immunization/Immunization';
+import AllergyDetails from './Tier-6/AllergyDetails/AllergyDetails';
+import AddAllergy from './Tier-6/addAllergy/AddAllergy';
 export {
   AdminConfiguration,
+  AddAllergy,
   AllActiveQ15,
   AllPatients,
+  AllergyDetails,
   AssignedPatients,
   CurrentPatients,
   Dashboard,
@@ -48,4 +60,13 @@ export {
   ResetSuccess,
   SecretKey,
   TodayAdmitted,
+  AdmitPatient,
+  OverView,
+  PatientData,
+  Reports,
+  TreatmentPlan,
+  Allergy,
+  PatientProblem,
+  PatientVitals,
+  Immunization,
 };

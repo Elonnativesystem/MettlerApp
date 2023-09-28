@@ -8,7 +8,7 @@ import {
 import React, {useEffect} from 'react';
 import {styles} from './styles';
 import {useDispatch, useSelector} from 'react-redux';
-import Toast from 'react-native-simple-toast';
+// import Toast from 'react-native-simple-toast';
 import {Loader} from '../../../components';
 import {getAllPatients} from '../../../redux/apiCalls';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
@@ -22,12 +22,12 @@ const AssignedPatients = ({navigation}) => {
   useEffect(() => {
     getAllPatients(dispatch);
   }, []);
-  useEffect(() => {
-    {
-      errorMsg &&
-        Toast.show(errorMsg, Toast.LONG, {backgroundColor: '#0f3995'});
-    }
-  }, [errorMsg]);
+  // useEffect(() => {
+  //   {
+  //     errorMsg &&
+  //       Toast.show(errorMsg, Toast.LONG, {backgroundColor: '#0f3995'});
+  //   }
+  // }, [errorMsg]);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#ffffff'}}>
       <Loader

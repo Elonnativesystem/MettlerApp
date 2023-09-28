@@ -6,12 +6,15 @@ import HeartECG from './heartECG/HeartECG';
 import Loader from './loader/Loader';
 import MyModal from './modal/Modal';
 import OtpBox from './otpBox/OtpBox';
+import PatientDataTabs from './patientDataTabs/PatientDataTabs';
+import PatientHeader from './patientHeader/PatientHeader';
 import Button from './primaryButton/Button';
 import PSAssignTabs from './psAssignTabs/PSAssignTabs';
 import Q15Row from './q15Row/Q15Row';
 import ScheduleBtn from './scheduleBtn/ScheduleBtn';
 import ShiftTabs from './shiftTabs/ShiftTabs';
 import Tabs from './tabs/Tabs';
+import VitalBtn from './vitalBtn/VitalBtn';
 import VitalBtnHorizontal from './vitalBtnHorizontal/VitalBtnHorizontal';
 import VitalBtnVertical from './vitalBtnVertical/VitalBtnVertical';
 
@@ -32,4 +35,7 @@ export {
   Tabs,
   VitalBtnHorizontal,
   VitalBtnVertical,
+  VitalBtn,
+  PatientHeader,
+  PatientDataTabs,
 };
