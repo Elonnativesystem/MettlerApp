@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useWindowDimensions} from 'react-native';
+import {useWindowDimensions} from 'react-native';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 export default function Tabs({
   FirstRoute,
@@ -22,7 +22,6 @@ export default function Tabs({
     {key: 'third', title: '12:00-17:45'},
     {key: 'fourth', title: '18:00-23:45'},
   ]);
-
 
   return (
     <TabView

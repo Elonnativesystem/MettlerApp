@@ -45,7 +45,7 @@ const AllActiveQ15 = ({navigation}) => {
   const [value, setValue] = useState('');
   const [value1, setValue1] = useState('');
   const [complete, setComplete] = useState(false);
-  const [breathCheck, setBreathCHeck] = useState(false);
+  const [breathCheck, setBreathCHeck] = useState(true);
   const [notesCheck, setNotesCheck] = useState(false);
   const [text, setText] = useState('');
   const [inputHeight, setInputHeight] = useState(100); // Initial height
@@ -154,7 +154,7 @@ const AllActiveQ15 = ({navigation}) => {
     }
     const stamp2FormattedMinutes = stamp2Minutes.toString().padStart(2, '0');
     setStamp2(`${stamp2Hours}${stamp2FormattedMinutes}`);
-    console.log(stamp2);
+    // console.log(stamp2);
   };
   useEffect(() => {
     getAllPatients(dispatch);
@@ -162,7 +162,7 @@ const AllActiveQ15 = ({navigation}) => {
     getQ15Location(dispatch);
     getShiftTimes(dispatch);
     calculateShift(date.getHours(), duration);
-    console.log(todayStaffsData);
+    // console.log(todayStaffsData);
   }, []);
   useEffect(() => {
     console.log('useEffect for getAllTodayStaffs is running');
@@ -185,7 +185,13 @@ const AllActiveQ15 = ({navigation}) => {
     calculateSlot(now);
     const interval = setInterval(() => {
       calculateSlot(new Date());
+      getAllPatients(dispatch);
+      getQ15Activity(dispatch);
+      getQ15Location(dispatch);
+      getShiftTimes(dispatch);
       calculateShift(date.getHours(), duration);
+      console.log(todayStaffsData);
+      // calculateShift(date.getHours(), duration);
       if (shift !== null) {
         getAllTodayStaffs(dispatch, q15Date, shift);
         calculateCurrentIndex();
@@ -242,7 +248,7 @@ const AllActiveQ15 = ({navigation}) => {
         setValue('');
         setValue1('');
         setOk(false);
-        setBreathCHeck(false);
+        setBreathCHeck(true);
         setNotesCheck(false);
         alert('Data Saved');
         setComplete(!complete);
@@ -556,7 +562,7 @@ const AllActiveQ15 = ({navigation}) => {
                   half
                   onPress={() => {
                     setOk(false);
-                    setBreathCHeck(false);
+                    setBreathCHeck(true);
                     setNotesCheck(false);
                     setValue(null);
                     setValue1(null);

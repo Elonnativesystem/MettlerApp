@@ -75,6 +75,10 @@ const userSlice = createSlice({
       state.mainStack = false;
       state.organization = [];
       state.allPatients = [];
+      state.allShiftStaffs=[];
+      state.duration = null;
+      state.error=null;
+      state.patientVitals=[];
     },
     retriveLoginSuccess: state => {
       state.pending = false;

@@ -34,8 +34,9 @@ export const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     padding: 5,
     borderWidth: 0.3,
-    borderColor: '#E5ECEF',
+    borderColor: '#D8DFE2',
     color: '#000',
+    paddingHorizontal: 10,
   },
   pendingHeader: {
     textAlign: 'center',
@@ -94,6 +95,7 @@ export const styles = StyleSheet.create({
   },
   pBtn: {
     maxHeight: 100,
+    backgroundColor: '#FFF',
   },
   patientUname: {
     fontSize: 15,
@@ -127,7 +129,7 @@ export const styles = StyleSheet.create({
   flatList: {
     // marginBottom: '10%',
     flex: 1,
-    paddingVertical: 10,
+    // paddingBottom: 10,
   },
   modalContainer: {
     backgroundColor: '#fff',
@@ -167,7 +169,7 @@ export const styles = StyleSheet.create({
     marginVertical: '2%',
     borderRadius: 3,
     backgroundColor: '#DBE5F2',
-    borderColor: '#999999',
+    borderColor: '#8d8d8d',
   },
   modalBtnView: {
     alignItems: 'center',

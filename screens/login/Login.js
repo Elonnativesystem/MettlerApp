@@ -62,7 +62,7 @@ const Login = ({navigation}) => {
         color="#0f3995"
         textStyle={{color: '#0f3995'}}
       />
-      <StatusBar barStyle={'light-content'} />
+      <StatusBar barStyle={'light-content'} backgroundColor="#0f3995" />
       <KeyboardAvoidingView style={styles.topContainer}>
         <ImageBackground
           source={require('../../assets/images/background.png')}
@@ -140,7 +140,7 @@ const Login = ({navigation}) => {
             {padding: 7},
           ]}>
           <Dropdown
-            style={[styles.input, isFocus && {borderColor: 'blue'}]}
+            style={[styles.input, {padding: 3}]}
             placeholderStyle={{marginLeft: '3%', fontSize: 20}}
             selectedTextStyle={{marginLeft: '3%'}}
             iconStyle={{marginRight: '-10%'}}

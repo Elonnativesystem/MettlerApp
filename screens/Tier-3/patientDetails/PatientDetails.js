@@ -56,8 +56,9 @@ const PatientDetails = ({navigation, route}) => {
               size={30}
               title="Height"
               value={
-                VitalsData.length > 0 &&
-                `${VitalsData?.height.value} (${VitalsData?.height.unit})`
+                VitalsData.height
+                  ? `${VitalsData.height.value} (${VitalsData.height.unit})`
+                  : '-' // Provide a default value or message if the property is undefined
               }
             />
             <VitalBtnHorizontal
@@ -71,8 +72,9 @@ const PatientDetails = ({navigation, route}) => {
               size={30}
               title="Weight"
               value={
-                VitalsData.length > 0 &&
-                `${VitalsData?.weight.value} (${VitalsData?.weight.unit})`
+                VitalsData.weight
+                  ? `${VitalsData?.weight.value} (${VitalsData?.weight.unit})`
+                  : '-'
               }
             />
             <VitalBtnHorizontal
@@ -86,8 +88,9 @@ const PatientDetails = ({navigation, route}) => {
               title="Gulucose"
               size={30}
               value={
-                VitalsData.length > 0 &&
-                `${VitalsData?.bloodGlucoseLevel.value} (${VitalsData?.bloodGlucoseLevel.unit})`
+                VitalsData.bloodGlucoseLevel
+                  ? `${VitalsData?.bloodGlucoseLevel.value} (${VitalsData?.bloodGlucoseLevel.unit})`
+                  : '-'
               }
             />
           </View>
@@ -97,7 +100,11 @@ const PatientDetails = ({navigation, route}) => {
             icon="temperature-celsius"
             size={30}
             header="Temp"
-            data={VitalsData.length > 0 && VitalsData?.bodyTemperature.value}
+            data={
+              VitalsData.bodyTemperature
+                ? VitalsData?.bodyTemperature.value
+                : '-'
+            }
             bg1="#E1E3FF"
             bg2="#B3B6E0"
           />
@@ -106,8 +113,9 @@ const PatientDetails = ({navigation, route}) => {
             size={30}
             header="BP"
             data={
-              VitalsData.length > 0 &&
-              `${VitalsData?.bloodPressure.systolicValue}/${VitalsData?.bloodPressure.diastolicValue} ${VitalsData?.bloodPressure.unit}`
+              VitalsData.bloodPressure
+                ? `${VitalsData?.bloodPressure.systolicValue}/${VitalsData?.bloodPressure.diastolicValue} ${VitalsData?.bloodPressure.unit}`
+                : '-'
             }
             bg1="#D8F1D8"
             bg2="#A7DBA7"
@@ -117,8 +125,9 @@ const PatientDetails = ({navigation, route}) => {
             size={30}
             header="Heart Rate"
             data={
-              VitalsData.length > 0 &&
-              `${VitalsData?.heartRate.value} ${VitalsData?.heartRate.unit}`
+              VitalsData.heartRate
+                ? `${VitalsData?.heartRate.value} ${VitalsData?.heartRate.unit}`
+                : '-'
             }
             bg1="#FAE8DF"
             bg2="#F1C0A7"

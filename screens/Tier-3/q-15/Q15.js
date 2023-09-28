@@ -1,3 +1,4 @@
+import React, {useEffect, useState, useMemo} from 'react';
 import {
   View,
   Text,
@@ -6,7 +7,6 @@ import {
   Modal,
   Pressable,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
 import {styles} from './styles';
 import {
   PostQ15Entry,
@@ -24,6 +24,8 @@ import MIcon from 'react-native-vector-icons/MaterialIcons';
 
 const Q15 = ({navigation, route}) => {
   const {patient} = route.params;
+
+  const [date, setDate] = useState(new Date());
   const [username, setUsername] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [stamp1, setStamp1] = useState('');
@@ -35,75 +37,51 @@ const Q15 = ({navigation, route}) => {
   const [isFocus, setIsFocus] = useState(false);
   const [isFocus1, setIsFocus1] = useState(false);
   const {q15Load, q15Location, q15Activity} = useSelector(state => state.user);
-  // const username = useSelector(state => state.user.userInfo.username);
   const LocationData = q15Location ? [q15Location] : [];
   const ActivityData = q15Activity ? [q15Activity] : [];
 
-  const transformedLocationData = LocationData[0]
-    ? Object.entries(LocationData[0]).map(([key, value]) => ({
-        label: `${value}`,
-        value: `${key}`,
-      }))
-    : [];
+  const transformedLocationData = useMemo(() => {
+    return LocationData[0]
+      ? Object.entries(LocationData[0]).map(([key, value]) => ({
+          label: `${value}`,
+          value: `${key}`,
+        }))
+      : [];
+  }, [LocationData]);
 
-  const transformedActivityData = ActivityData[0]
-    ? Object.entries(ActivityData[0]).map(([key, value]) => ({
-        label: `${value}`,
-        value: `${key}`,
-      }))
-    : [];
+  const transformedActivityData = useMemo(() => {
+    return ActivityData[0]
+      ? Object.entries(ActivityData[0]).map(([key, value]) => ({
+          label: `${value}`,
+          value: `${key}`,
+        }))
+      : [];
+  }, [ActivityData]);
+
   const q15ActAndLocNotFound =
     transformedLocationData.length === 0 ||
     transformedActivityData.length === 0;
-
-  // if (q15ActAndLocNotFound) {
-  //   // Return loading indicator or placeholder component
-  //   return (
-  //     <View
-  //       style={{
-  //         flex: 1,
-  //         justifyContent: 'center',
-  //         alignItems: 'center',
-  //         backgroundColor: '#007DA6',
-  //       }}>
-  //       <Image
-  //         source={require('../../../assets/images/suc.jpg')}
-  //         resizeMode="contain"
-  //         style={{width: '100%', height: '80%'}}
-  //       />
-  //       <Text
-  //         style={{
-  //           fontSize: 20,
-  //           fontWeight: 'bold',
-  //           position: 'absolute',
-  //           top: '72%',
-  //           backgroundColor: '#007DA6',
-  //         }}>
-  //         We are Working on it
-  //       </Text>
-  //     </View>
-  //   );
-  // }
 
   const dispatch = useDispatch();
   useEffect(() => {
     getQ15Location(dispatch);
     getQ15Activity(dispatch);
-    console.log(transformedActivityData);
   }, []);
-  useEffect(() => {
-    getQ15Config(dispatch, patient.id);
-  }, [q15Load]);
 
   const q15Time = hours + `${boxNo}`;
+  const qYear = date.getFullYear().toString();
+  const qMonth = (date.getMonth() + 1).toString().padStart(2, '0');
+  const qDate = date.getDate().toString().padStart(2, '0');
+  const q15Date = qYear + qMonth + qDate;
+  const stamp = `${q15Time}-${q15Time.slice(0, 2)}${parseInt(boxNo) + 15}`;
+  const pid = patient.id;
+
+  useEffect(() => {
+    getQ15Config(dispatch, patient.id, q15Date);
+  }, [q15Load, q15Date]);
   const handleSubmit = async () => {
     const slot = stamp1;
-    const qYear = date.getFullYear().toString();
-    const qMonth = (date.getMonth() + 1).toString().padStart(2, '0');
-    const qDate = date.getDate().toString().padStart(2, '0');
-    const q15Date = qYear + qMonth + qDate;
-    const stamp = `${q15Time}-${q15Time.slice(0, 2)}${parseInt(boxNo) + 15}`;
-    const pid = patient.id;
+
     if (value && value1) {
       await PostQ15Entry(
         pid,
@@ -113,6 +91,8 @@ const Q15 = ({navigation, route}) => {
         stamp,
         slot,
         username,
+        true,
+        null,
         dispatch,
       );
       setValue('');
@@ -121,17 +101,23 @@ const Q15 = ({navigation, route}) => {
       alert('Data Saved');
     } else {
       alert('Please select the options');
-      console.log(q15Slot);
     }
   };
-  const [date, setDate] = useState(new Date());
+
   const [open, setOpen] = useState(false);
   const [selectedDateIndex, setSelectedDateIndex] = useState(3);
-  const hoursArray = Array.from({length: 24}, (_, index) => index); // Create an array from 0 to 23
-  const hoursSubarrays = [];
-  for (let i = 0; i < hoursArray.length; i += 6) {
-    hoursSubarrays.push(hoursArray.slice(i, i + 6));
-  }
+  const hoursArray = useMemo(
+    () => Array.from({length: 24}, (_, index) => index),
+    [],
+  );
+  const hoursSubarrays = useMemo(() => {
+    const subarrays = [];
+    for (let i = 0; i < hoursArray.length; i += 6) {
+      subarrays.push(hoursArray.slice(i, i + 6));
+    }
+    return subarrays;
+  }, [hoursArray]);
+
   const generateNextFourDates = () => {
     const today = new Date();
     const nextFourDates = [];
@@ -154,6 +140,7 @@ const Q15 = ({navigation, route}) => {
     const slotName = `${hourChar}${quarter.toString().padStart(2, '0')}`;
     setSlot(slotName);
   };
+
   useEffect(() => {
     calculateSlot(date);
   }, []);

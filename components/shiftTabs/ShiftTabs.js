@@ -25,11 +25,11 @@ export default function ShiftTabs({FirstRoute, SecondRoute, ThirdRoute}) {
       renderTabBar={props => (
         <TabBar
           {...props}
-          style={{backgroundColor: 'transparent'}}
+          style={{backgroundColor: '#FFF'}}
           labelStyle={{
-            fontSize: 10,
+            fontSize: 14,
             color: '#000',
-            fontWeight: '700',
+            fontWeight: '500',
           }}
           activeColor="#0f3995"
           indicatorStyle={{backgroundColor: '#0f3995', height: 5}}

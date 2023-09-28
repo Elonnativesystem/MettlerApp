@@ -34,16 +34,16 @@ const successCode = 'MHC - 0200';
 
 export const GetOrganization = async dispatch => {
   // dispatch(apiCallStart());
-  console.log('Hello');
-  console.log(baseURL);
+  // console.log('Hello');
+  // console.log(baseURL);
   try {
     const res = await axios.get(`${baseURL}/org/name`);
-    console.log(res.data);
+    // console.log(res.data);
     // await AsyncStorage.setItem('organization', res.data);
-    await dispatch(orgSuccess(res.data));
+    await dispatch(orgSuccess(res.data.data));
   } catch (error) {
     dispatch(apiCallError(error.response.data.errorMessage));
-    console.log(error.response.data);
+    // console.log(error.response.data);
   }
 };
 
@@ -53,7 +53,7 @@ export const Login2 = async (userInfo, dispatch, navigation) => {
     const res = await axios.post(`${baseURL}/user/signin`, userInfo);
     // console.log(res.data);
     if (res.data.message.code === successCode) {
-      console.log(res.data.data.userDetail);
+      // console.log(res.data.data.userDetail);
       dispatch(
         loginSuccess({
           username: userInfo.username,
@@ -81,7 +81,7 @@ export const Login2 = async (userInfo, dispatch, navigation) => {
       );
     } else {
       dispatch(apiCallError(res.data.message.description));
-      console.log(res.data.message.description);
+      // console.log(res.data.message.description);
     }
   } catch (error) {
     dispatch(apiCallError(error.response.data.errorMessage));
@@ -99,7 +99,7 @@ export const SecretKeyVerify = async (userInfo, dispatch) => {
       dispatch(apiCallError(res.data.message.description));
     }
 
-    console.log(res.data);
+    // console.log(res.data);
   } catch (error) {
     // console.log(error);
     dispatch(apiCallError(error.response.data.errorMessage));
@@ -118,7 +118,7 @@ export const Logout = async (userInfo, dispatch, navigation) => {
     //   dispatch(apiCallError(res.data.message.description));
     // }
 
-    console.log(res.data);
+    // console.log(res.data);
   } catch (error) {
     dispatch(apiCallError(error.response.data.errorMessage));
     console.log(error.response.data.errorMessage);
@@ -136,14 +136,14 @@ export const RetriveLogin = async dispatch => {
         Authorization: `Bearer ${jwt}`,
       },
     });
-    console.log(res.data.message);
+    // console.log(res.data.message);
     if (res.data.message.code === successCode) {
       dispatch(retriveLoginSuccess());
-      console.log('hii');
+      // console.log('hii');
       await AsyncStorage.setItem('retrive', 'true');
     } else {
       dispatch(apiCallError());
-      console.log(res.data.message);
+      // console.log(res.data.message);
     }
   } catch (error) {
     dispatch(apiCallError());
@@ -199,7 +199,7 @@ export const ResetPassword1 = async (
       confirmNewPass: cPassword,
       email,
     });
-    console.log(res.data);
+    // console.log(res.data);
     if (res.data.code === successCode) {
       dispatch(apiCallSuccess());
       navigation.navigate('ResetSuccess');
@@ -237,7 +237,7 @@ export const getAllPatients = async dispatch => {
   try {
     const res = await axios.get(`${baseURL}/patient/get/activePatient/${org}`);
     // console.log(res.data);
-    dispatch(allPatientsSuccess(res.data));
+    dispatch(allPatientsSuccess(res.data.data));
   } catch (error) {
     dispatch(apiCallError(error.response.data.errorMessage));
     console.log(error.response);
@@ -248,26 +248,27 @@ export const getVitalByPatientId = async (dispatch, pid) => {
   dispatch(apiCallStart());
   try {
     const res = await axios.get(`${baseURL}/vital/getByPatientId/${pid}`);
-    console.log(res.data.data);
+    // console.log(res.data.data);
     if (res.data.message.code === successCode) {
       dispatch(getVitalByPatientIdSuccess(res.data.data));
     } else {
       dispatch(apiCallError(res.data.message.description));
-      console.log(pid);
+      dispatch(getVitalByPatientIdSuccess({}));
+      // console.log(pid);
     }
   } catch (error) {
-    dispatch(apiCallError(error.response.data.errorMessage));
+    // dispatch(apiCallError(error.response.data.errorMessage));
     console.log(error.response);
   }
 };
 
 export const getQ15Location = async dispatch => {
   dispatch(apiCallStart());
-  console.log('HEllo');
+  // console.log('HEllo');
   try {
-    const res = await axios.get(`${baseURL}/get/wg2rzH0Yjj`);
+    const res = await axios.get(`${baseURL}/q15form/get/wg2rzH0Yjj`);
     // console.log(res.data);
-    dispatch(getQ15LocationSuccess(res.data.data.Q15Form.location));
+    dispatch(getQ15LocationSuccess(res.data.data.location));
   } catch (error) {
     dispatch(apiCallError(error.response.data.errorMessage));
     console.log(error.response);
@@ -276,9 +277,9 @@ export const getQ15Location = async dispatch => {
 export const getQ15Activity = async dispatch => {
   dispatch(apiCallStart());
   try {
-    const res = await axios.get(`${baseURL}/get/l6gsqwczMR`);
+    const res = await axios.get(`${baseURL}/q15form/get/l6gsqwczMR`);
     // console.log(res.data);
-    dispatch(getQ15ActivitySuccess(res.data.data.Q15Form.activity));
+    dispatch(getQ15ActivitySuccess(res.data.data.activity));
   } catch (error) {
     dispatch(apiCallError(error.response.data.errorMessage));
     console.log(error.response);
@@ -319,10 +320,12 @@ export const PostQ15Entry = async (
   }
 };
 
-export const getQ15Config = async (dispatch, pid) => {
+export const getQ15Config = async (dispatch, pid, q15Date) => {
   dispatch(apiCallStart());
   try {
-    const res = await axios.get(`${baseURL}/config/getById/${pid}`);
+    const res = await axios.get(
+      `${baseURL}/config/getById/${pid}/date/${q15Date}`,
+    );
     // console.log(res.data);
     dispatch(getQ15ConfigSuccess(res.data.data));
   } catch (error) {
@@ -339,7 +342,7 @@ export const getCompletedQ15 = async (dispatch, q15Slot, q15Date) => {
       `${baseURL}/config/get/completed/${q15Slot}/${q15Date}/${org}`,
     );
     dispatch(getCompletedQ15Success(res.data.data));
-    console.log(res.data);
+    // console.log(res.data);
     console.log(org);
   } catch (error) {
     dispatch(apiCallError(error.response.data.errorMessage));
@@ -355,7 +358,7 @@ export const getIncompletedQ15 = async (dispatch, q15Slot, q15Date) => {
       `${baseURL}/config/get/notCompleted/${q15Slot}/${q15Date}/${org}`,
     );
     dispatch(getIncompletedQ15Success(res.data.data));
-    console.log(res.data);
+    // console.log(res.data);
   } catch (error) {
     dispatch(apiCallError(error.response.data.errorMessage));
     console.log(error.response.data.errorMessage);
@@ -367,14 +370,10 @@ export const getShiftTimes = async dispatch => {
   const org = await AsyncStorage.getItem('org');
   try {
     const res = await axios.get(`${baseURL}/org/getById/${org}`);
-    console.log(res.data.data.organization.shift);
+    // console.log(res.data.data.organization.shift);
     if (res.data.data) {
-      dispatch(
-        getShiftStartTimesSuccess(res.data.data.organization.shift.startTime),
-      );
-      dispatch(
-        getShiftDurationSuccess(res.data.data.organization.shift.duration),
-      );
+      dispatch(getShiftStartTimesSuccess(res.data.data.shift.startTime));
+      dispatch(getShiftDurationSuccess(res.data.data.shift.duration));
       // await AsyncStorage.setItem(
       //   'shiftDuration',
       //   res.data.data.organization.shift.duration,
@@ -424,7 +423,7 @@ export const postQ15PSConfig = async (dispatch, data) => {
       Alert.alert('Mettler Health Care', 'Staffs Allocated Successfully');
       dispatch(apiCallSuccess());
     }
-    console.log(res.data);
+    // console.log(res.data);
   } catch (error) {
     console.log(error);
     dispatch(apiCallError(error.response.data.errorMessage));
@@ -441,6 +440,7 @@ export const getAllTodayStaffs = async (dispatch, q15Date, shift) => {
       dispatch(getTodayRNSuccess(res.data.data.shift[shift].rnIncharge));
       // console.log(res.data.data[0].shift[shift]?.schedule[0]);
       // console.log(shift);
+      console.log("hello");
     }
   } catch (error) {
     console.log(error);
@@ -454,7 +454,7 @@ export const getAllTodayShifts = async (dispatch, RDate) => {
     const res = await axios.get(`${baseURL}/PSConfig/getByDate/${RDate}`);
     if (res.data.data) {
       dispatch(getAllTodayShiftsSuccess(res.data.data.shift));
-      console.log('SUCEESSSSS', res.data.data.shift[0].rnIncharge);
+      // console.log('SUCEESSSSS', res.data.data.shift[0].rnIncharge);
     }
     if (res.data.message.code === 'MHC - 0093') {
       dispatch(getAllTodayShiftsSuccess([]));

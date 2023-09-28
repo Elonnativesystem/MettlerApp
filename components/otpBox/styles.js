@@ -4,6 +4,7 @@ export const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'center',
+    alignItems: 'center',
     marginTop: '5%',
     width: '80%',
     marginHorizontal: 10,
@@ -20,7 +21,7 @@ export const styles = StyleSheet.create({
     fontSize: 22,
     // marginRight: 10,
     marginHorizontal: 5,
-    
+    textAlignVertical: 'center',
   },
   otpBoxFilled: {
     borderColor: '#0f3995',

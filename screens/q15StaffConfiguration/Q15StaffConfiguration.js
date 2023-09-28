@@ -42,31 +42,7 @@ const Q15StaffConfiguration = () => {
   useEffect(() => {
     getShiftTimes(dispatch);
     getAllTodayShifts(dispatch, RDate);
-  }, [RDate]);
-  // useEffect(() => {
-  //   getAllTodayShifts(dispatch, RDate);
-  // }, [RDate]);
-  // const getDurationAndStartTime = async () => {
-  //   try {
-  //     const storedDuration = await AsyncStorage.getItem('shiftDuration');
-  //     const storedStartTime = await AsyncStorage.getItem('shiftStartTime');
-
-  //     // Check if both values are available before setting the state
-  //     if (storedDuration && storedStartTime) {
-  //       setDuration(storedDuration);
-  //       setStartTime(storedStartTime);
-  //     } else {
-  //       // Handle the case where either value is missing
-  //       console.log('Missing duration or startTime in AsyncStorage');
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-  // useEffect(() => {
-  //   getDurationAndStartTime();
-  // }, []);
-  const endTime =
+  }, [date]); const endTime =
     (parseInt(startTime?.slice(0, 2)) + parseInt(duration))
       .toString()
       .padStart(2, '0') + ':00';
@@ -74,6 +50,7 @@ const Q15StaffConfiguration = () => {
     (parseInt(endTime?.slice(0, 2)) + parseInt(duration))
       .toString()
       .padStart(2, '0') + ':00';
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -91,7 +68,9 @@ const Q15StaffConfiguration = () => {
               setSelectedDateIndex(index);
             }}>
             <CalendarDate
-              bgColor={date.getDate() === date1.getDate() ? '#255ED6' : '#fff'} // Set background color conditionally
+              bgColor={
+                date.getDate() === date1.getDate() ? '#255ED6' : '#eef1f6'
+              } // Set background color conditionally
               textColor={date.getDate() === date1.getDate() ? '#fff' : '#000'} // Set background color conditionally
               date={date1.getDate()}
               day={date1
@@ -108,6 +87,7 @@ const Q15StaffConfiguration = () => {
             date={<MCIcon name="calendar-search" size={35} />}
             bgColor={selectedDateIndex > 5 ? '#2e6aea' : '#2e6aea'}
             textColor={'#fff'}
+            noLine
           />
         </TouchableOpacity>
         <DatePicker
@@ -128,36 +108,57 @@ const Q15StaffConfiguration = () => {
       </View>
       {/* SHIFT TABS */}
       <ShiftTabs
-        FirstRoute={() => (
-          <ShiftComponent
-            startTime={startTime ? startTime : 'Fetching'}
-            endTime={endTime}
-            date={RDate}
-            shiftName="Shift-A"
-            RNData={AllShiftStaffs[0]?.rnIncharge}
-            SWData={AllShiftStaffs[0]?.schedule}
-          />
-        )}
-        SecondRoute={() => (
-          <ShiftComponent
-            startTime={endTime}
-            endTime={endTime1}
-            date={RDate}
-            shiftName="Shift-B"
-            RNData={AllShiftStaffs[1]?.rnIncharge}
-            SWData={AllShiftStaffs[1]?.schedule}
-          />
-        )}
-        ThirdRoute={() => (
-          <ShiftComponent
-            startTime={endTime1}
-            endTime={startTime}
-            date={RDate}
-            shiftName="Shift-C"
-            RNData={AllShiftStaffs[2]?.rnIncharge}
-            SWData={AllShiftStaffs[2]?.schedule}
-          />
-        )}
+        FirstRoute={() => {
+          const shiftName = 'Shift-A';
+          const shift = AllShiftStaffs.find(
+            shift => shift.shiftName === shiftName,
+          );
+
+          return (
+            <ShiftComponent
+              startTime={startTime}
+              endTime={endTime}
+              date={RDate}
+              shiftName={shiftName}
+              RNData={shift?.rnIncharge}
+              SWData={shift?.schedule}
+            />
+          );
+        }}
+        SecondRoute={() => {
+          const shiftName = 'Shift-B';
+          const shift = AllShiftStaffs.find(
+            shift => shift.shiftName === shiftName,
+          );
+
+          return (
+            <ShiftComponent
+              startTime={endTime}
+              endTime={endTime1}
+              date={RDate}
+              shiftName={shiftName}
+              RNData={shift?.rnIncharge}
+              SWData={shift?.schedule}
+            />
+          );
+        }}
+        ThirdRoute={() => {
+          const shiftName = 'Shift-C';
+          const shift = AllShiftStaffs.find(
+            shift => shift.shiftName === shiftName,
+          );
+
+          return (
+            <ShiftComponent
+              startTime={endTime1}
+              endTime={startTime}
+              date={RDate}
+              shiftName={shiftName}
+              RNData={shift?.rnIncharge}
+              SWData={shift?.schedule}
+            />
+          );
+        }}
       />
     </View>
   );
